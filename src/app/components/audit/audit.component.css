@@ -1,0 +1,35 @@
+button {
+  color: white;
+  background-color: orange;
+  margin-top: 5px;
+}
+
+#main-grid {
+  height: 90.5vh;
+}
+
+button {
+  color: white;
+  background-color: orange;
+  margin-top: 5px;
+}
+
+mat-card {
+  width: 40vw;
+  height: -webkit-fill-available;
+  overflow: scroll;
+}
+
+#viewer {
+  width: 50vw;
+  height: -webkit-fill-available;
+}
+
+#dragndrop {
+  width: 50vw;
+  height: -webkit-fill-available;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  opacity: 0;
+}

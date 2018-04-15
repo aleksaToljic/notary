@@ -1,0 +1,112 @@
+
+///*------------------------------------*\
+//    #MIXINS
+//\*------------------------------------*/
+
+// Spit out vendor prefixes in one go. Very pragmatic, far from perfect. have only most common vendors
+@mixin vendor($property, $value...) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  #{$property}: $value;
+}
+
+//also vendor but added opera as well, used for example transition property
+@mixin vendor-o($property, $value...) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+
+//vendor for top-right border radius
+@mixin border-radius-top-right($value) {
+  -moz-border-radius-topright: $value;
+  -webkit-border-top-right-radius: $value;
+  border-top-right-radius: $value;
+}
+
+//vendor for bottom-right border radius
+@mixin border-radius-bottom-right($value) {
+  -moz-border-radius-bottomright: $value;
+  -webkit-border-bottom-right-radius: $value;
+  border-bottom-right-radius: $value;
+}
+
+//mixin for calculating across browsers e.g @include calc(width,'100% - 40px',true(optional if you want calc to be !important));
+@mixin calc($property, $expression , $isImportant: false) {
+  $string: null;
+  @if $isImportant == true {
+    $string: !important;
+  }
+  @else {
+    $string: null;
+  }
+  #{$property}: -moz-calc(#{$expression}) $string;
+  #{$property}: -webkit-calc(#{$expression}) $string;
+  #{$property}: calc(#{$expression}) $string;
+}
+
+//set .ui-width--300 or .ui-max-height--300, etc.
+@mixin create_base_class_px($property , $value) {
+  .ui-#{$property}--#{$value} {
+    #{$property}: #{$value}px;
+  }
+}
+
+// set .ui-color--dark-red
+@mixin create_base_class($property , $value, $class:null) {
+  @if($class == null) {
+    $class: $value;
+  }
+  .ui-#{$property}--#{$class} {
+    #{$property}: #{$value};
+  }
+}
+
+
+@mixin display_flex {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+//not allowing user to select text in browser
+@mixin user-select($property) {
+  -webkit-touch-callout: $property;
+  -webkit-user-select: $property;
+  -khtml-user-select: $property;
+  -moz-user-select: $property;
+  -ms-user-select: $property;
+  user-select: $property;
+}
+
+//mixin for opacity
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+
+//functions  ******************************************************************************************************************************************
+
+//function to check items in list and return true if there is any unit e.g px,em
+@function contains-number($list) {
+  $contains: false;
+  @each $item in $list { @if unitless($item) { $contains: true; } }
+  @return $contains;
+}
+//function to change current background-position to desired one according to your desired width and height e.g change-backround-position(44,34,-1731 - 2(if you want to change a bit the result))
+@function change-backround-position($desired-width,$current-width,$current-y-axis){
+  $list: $desired-width,$current-width,$current-y-axis;
+  @if contains-number($list) {
+    @return unquote(round($desired-width / $current-width * $current-y-axis) + 'px');
+  } @else {
+    @warn "I recommend that you use only numbers in this function";
+    @return round($desired-width / $current-width * $current-y-axis);
+  }
+}

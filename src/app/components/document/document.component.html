@@ -1,0 +1,6 @@
+<div id="document">
+  <div id="upload">
+    <input *ngIf="uploadMode" id="dragndrop" type="file" (change)="changeListener($event)" />
+    <iframe *ngIf="!uploadMode" id="viewer" src="http://localhost"></iframe>
+  </div>
+</div>

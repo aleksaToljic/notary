@@ -1,0 +1,54 @@
+
+//font-size clases .ui-font-size--13
+@include create_base_class_px(font-size,13);
+@include create_base_class_px(font-size,14);
+@include create_base_class_px(font-size,36);
+
+@include create_base_class_px(width,106);
+@include create_base_class_px(width,190);
+
+@include create_base_class_px(max-width,330);
+
+
+//border radius classes .ui-border-radius--11
+@include create_base_class_px(border-radius,11);
+
+//color classes .ui-color--dark-red
+@include create_base_class(color, $darkred_color, dark-red);
+@include create_base_class(color, $lightblue_color, light-blue);
+//used for gray links
+@include create_base_class(color, $darkgray_color, dark-gray);
+@include create_base_class(color, $white, white);
+@include create_base_class(color, $black_semilight_color, black-semilight);
+@include create_base_class(color, $light_gray_color, light-gray);
+
+
+@include create_base_class(display, table);
+@include create_base_class(display, table-row);
+@include create_base_class(display, table-cell);
+
+@include create_base_class(line-height, 0);
+
+@include create_base_class(vertical-align, middle);
+@include create_base_class(text-decoration, underline);
+@include create_base_class(cursor, pointer);
+@include create_base_class(font-weight, 600, bold);
+@include create_base_class(height, 100vh, full-browser);
+
+.ui-height--full-browser-56 {
+  @include calc(height, '100vh - 56px');
+}
+
+//class used for clearing floats use it on <p> tags only
+.clear {
+  clear: both;
+  //height: 0;co
+  margin: 0;
+  padding: 0;
+}
+
+//set a separator gray border to element, good for clears and divs
+.ui-separator--top-gray {
+  border-top: 1px solid $lr_border_color;
+}
+

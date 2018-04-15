@@ -1,0 +1,98 @@
+<div class="w-50 m-auto" [inlineSVG]="'/assets/logo.svg'"></div>
+<form class="mt-4" [formGroup]="signupForm" (ngSubmit)="register()">
+    <div formGroupName="userData">
+        <div class="form-group">
+            <!--<label for="firstname">First name</label>-->
+            <input
+                    type="text"
+                    id="firstname" placeholder="First Name"
+                    formControlName="firstname"
+                    class="form-control">
+            <span class="help-block ui-font-size--13 ui-color--dark-red"
+                  *ngIf="!signupForm.get('userData.firstname').valid && signupForm.get('userData.firstname').touched">
+                                Please enter a valid first name!
+                            </span>
+        </div>
+        <div class="form-group">
+            <!--<label for="lastname">Last name</label>-->
+            <input
+                    type="text"
+                    id="lastname" placeholder="Last Name"
+                    formControlName="lastname"
+                    class="form-control">
+            <span class="help-block ui-font-size--13 ui-color--dark-red"
+                  *ngIf="!signupForm.get('userData.lastname').valid && signupForm.get('userData.lastname').touched">
+                                Please enter a valid last name!
+                            </span>
+        </div>
+        <div class="form-group">
+            <!--<label for="lastname">Last name</label>-->
+            <input
+                    type="text"
+                    id="companyName" placeholder="Company Name"
+
+                    class="form-control">
+            <!--<span class="help-block ui-font-size&#45;&#45;13 ui-color&#45;&#45;dark-red"-->
+            <!--*ngIf="!signupForm.get('userData.lastname').valid && signupForm.get('userData.lastname').touched">-->
+            <!--Please enter a valid last name!-->
+            <!--</span>-->
+        </div>
+        <p class="clear ui-separator--top-gray"></p>
+        <div class="form-group mt-3">
+            <!--<label for="username">Username</label>-->
+            <input
+                    type="text" placeholder="Username"
+                    id="username"
+                    class="form-control"
+                    formControlName="username"
+            >
+            <span class="help-block ui-font-size--13 ui-color--dark-red"
+                  *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched">
+                                This field is required!
+                             </span>
+        </div>
+        <div class="form-group">
+            <!--<label for="email">email</label>-->
+            <input
+                    type="text"
+                    id="email" placeholder="eMail"
+                    formControlName="email"
+                    class="form-control">
+            <span class="help-block ui-font-size--13 ui-color--dark-red"
+                  *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched">
+                                Please enter a valid email!
+                            </span>
+        </div>
+        <p class="clear ui-separator--top-gray"></p>
+        <div class="form-group mt-3">
+            <!--<label for="password">Password</label>-->
+            <input
+                    type="password"
+                    id="password" placeholder="Password"
+                    formControlName="password"
+                    class="form-control">
+            <span class="help-block ui-font-size--13 ui-color--dark-red"
+                  *ngIf="!signupForm.get('userData.password').valid && signupForm.get('userData.password').touched">
+                                Please enter a valid password!
+                            </span>
+        </div>
+        <div class="form-group mt-3">
+            <!--<label for="password">Password</label>-->
+            <input
+                    type="password"
+                    id="passwordRetype" placeholder="Repeat Password"
+
+                    class="form-control">
+            <!--<span class="help-block ui-font-size&#45;&#45;13 ui-color&#45;&#45;dark-red"-->
+            <!--*ngIf="!signupForm.get('userData.password').valid && signupForm.get('userData.password').touched">-->
+            <!--Please enter a valid password!-->
+            <!--</span>-->
+        </div>
+
+    </div>
+    <!--<span class="help-block" *ngIf="!signupForm.valid && signupForm.touched">-->
+    <!--Please enter a valid data!-->
+    <!--</span>-->
+    <button class="btn ui-button--blue ui-color--white ui-font-weight--bold w-100 ui-border-radius--11" type="submit">Register</button>
+    <button class="btn ui-font-weight--bold ui-button--white ui-color--light-blue ui-border-radius--11 w-100 mt-3" routerLink="/login" type="button">Log In</button>
+</form>

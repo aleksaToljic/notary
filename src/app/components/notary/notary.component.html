@@ -1,0 +1,9 @@
+<!--<app-header (sendSession)="sessionMidleman($event);" id="nav" [title]="title"></app-header>-->
+<mat-grid-list id="main-grid" cols="{{columns}}" rowHeight="fit" (window:resize)="onResize($event)">
+  <mat-grid-tile>
+    <app-document (onDrop)="droped($event);" [uploadMode]="uploadMode"></app-document>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <app-signatures   [showSignatures]="showSignatures" [showProps]="showProps" [showSign]="showSign" [showHyperlink]="showHyperlink" [documentProperties]="documentProperties" (closeEvent)="close($event)"></app-signatures>
+  </mat-grid-tile>
+</mat-grid-list>

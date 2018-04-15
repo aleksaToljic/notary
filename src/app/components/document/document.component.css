@@ -1,0 +1,21 @@
+#document {
+  
+}
+
+#upload {
+
+}
+
+#viewer {
+  width: 50vw;
+  height: -webkit-fill-available;
+}
+
+#dragndrop {
+  width: 50vw;
+  height: -webkit-fill-available;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  opacity: 0;
+}

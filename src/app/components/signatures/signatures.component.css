@@ -1,0 +1,24 @@
+#signatures-grid {
+  height: -webkit-fill-available;
+  width: 50vw;
+}
+
+button {
+  color: white;
+  background-color: orange;
+  margin-top: 5px;
+}
+
+mat-card {
+  width: 40vw;
+  height: 35vh;
+  overflow: scroll;
+}
+
+#signees-header {
+  margin-bottom: 5px;
+}
+
+mat-expansion-panel {
+  overflow: auto;
+}

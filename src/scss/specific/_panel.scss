@@ -1,0 +1,6 @@
+.ui-panel--login {
+  max-width: 360px;
+  background: $white_transparent_95;
+  @include vendor(box-shadow, -28px 0px 13px -28px $lr_shadow_color, 28px 0px 13px -28px $lr_shadow_color);
+  //background: url("../assets/logo.svg");
+}

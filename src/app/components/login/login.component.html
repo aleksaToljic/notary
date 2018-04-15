@@ -1,0 +1,10 @@
+<app-header title="Login"></app-header>
+<form (submit)="login()">
+  <mat-form-field class="input">
+    <input matInput [(ngModel)]="username" name="username" placeholder="Username">
+  </mat-form-field>
+  <mat-form-field class="input">
+    <input matInput [(ngModel)]="password" type="password" name="password" placeholder="Password">
+  </mat-form-field>
+  <button mat-button type="submit" id="login">Login</button>
+</form>

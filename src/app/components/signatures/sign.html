@@ -1,0 +1,8 @@
+<p style="color: red;">{{ message }}</p>
+<form>
+  <mat-form-field>
+    <input matInput [(ngModel)]="password" name="password" type="password" placeholder="Your password:">
+  </mat-form-field>
+  Agree <mat-slide-toggle (click)="toggle()"></mat-slide-toggle> Disagree
+  <button mat-button style="background-color: orange; color: white;" (click)="decrypt();">Sign</button>
+</form>

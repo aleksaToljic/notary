@@ -1,0 +1,31 @@
+
+///*------------------------------------*\
+//    #BASE
+//\*------------------------------------*/
+@font-face {
+  font-family: $font_1;
+  src: $url_49;
+  src: $url_50 format('embedded-opentype'), $url_51 format('woff2'), $url_52 format('woff'), $url_53 format('truetype'), $url_54 format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: $font_1;
+  src: $url_43;
+  src: $url_44 format('embedded-opentype'), $url_45 format('woff2'), $url_46 format('woff'), $url_47 format('truetype'), $url_48 format('svg');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: $font_1;
+  src: $url_55;
+  src: $url_56 format('embedded-opentype'), $url_57 format('woff2'), $url_58 format('woff'), $url_59 format('truetype'), $url_60 format('svg');
+  font-weight: 600;
+  font-style: normal;
+}
+
+
+body {
+  margin: 0;
+  font-family: $font_1;
+}
