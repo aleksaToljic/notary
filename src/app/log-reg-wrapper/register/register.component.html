@@ -3,6 +3,7 @@
     <div formGroupName="userData">
         <div class="form-group">
             <!--<label for="firstname">First name</label>-->
+            <!--<label style="color: red" *ngIf="existingUser">User already exist.</label>-->
             <input
                     type="text"
                     id="firstname" placeholder="First Name"
@@ -12,6 +13,7 @@
                   *ngIf="!signupForm.get('userData.firstname').valid && signupForm.get('userData.firstname').touched">
                                 Please enter a valid first name!
                             </span>
+
         </div>
         <div class="form-group">
             <!--<label for="lastname">Last name</label>-->
@@ -37,8 +39,13 @@
             <!--Please enter a valid last name!-->
             <!--</span>-->
         </div>
+        <span class="help-block ui-font-size--13 ui-color--dark-red"
+              *ngIf="existingUser">
+                                Username or eMail already exists!
+                            </span>
         <p class="clear ui-separator--top-gray"></p>
         <div class="form-group mt-3">
+
             <!--<label for="username">Username</label>-->
             <input
                     type="text" placeholder="Username"
@@ -93,6 +100,10 @@
     <!--<span class="help-block" *ngIf="!signupForm.valid && signupForm.touched">-->
     <!--Please enter a valid data!-->
     <!--</span>-->
-    <button class="btn ui-button--blue ui-color--white ui-font-weight--bold w-100 ui-border-radius--11" type="submit">Register</button>
-    <button class="btn ui-font-weight--bold ui-button--white ui-color--light-blue ui-border-radius--11 w-100 mt-3" routerLink="/login" type="button">Log In</button>
+    <button class="btn ui-button--blue ui-color--white ui-font-weight--bold w-100 ui-border-radius--11" type="submit">
+        Register
+    </button>
+    <button class="btn ui-font-weight--bold ui-button--white ui-color--light-blue ui-border-radius--11 w-100 mt-3"
+            routerLink="/login" type="button">Log In
+    </button>
 </form>

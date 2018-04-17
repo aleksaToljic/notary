@@ -1,9 +1,11 @@
 <p class="clear mb-5"></p>
 <div class="w-50 m-auto" [inlineSVG]="'/assets/logo.svg'"></div>
 <form class="mt-4" [formGroup]="signupForm" (ngSubmit)="login()">
+
     <div formGroupName="userData">
 
         <div class="form-group mt-5">
+
             <!--<label for="username">Username</label>-->
             <input
                     type="text" placeholder="Username"
@@ -35,10 +37,22 @@
     <!--<span class="help-block" *ngIf="!signupForm.valid && signupForm.touched">-->
     <!--Please enter a valid data!-->
     <!--</span>-->
-    <button class="btn ui-button--blue ui-color--white ui-font-weight--bold w-100 ui-border-radius--11 mt-2" type="submit">Log In</button>
+    <div class="text-center">
+    <span class="help-block ui-font-size--13 ui-color--dark-red"
+          *ngIf="wrongUserPass">
+        Wrong username or password!
+                             </span>
+    </div>
+
+    <button class="btn ui-button--blue ui-color--white ui-font-weight--bold w-100 ui-border-radius--11 mt-2"
+            type="submit">Log In
+    </button>
     <p class="clear mt-3"></p>
-    <button class="btn ui-font-weight--bold ui-button--white ui-color--light-blue ui-border-radius--11 w-100 mt-4" routerLink="/register" type="button">Register</button>
+    <button class="btn ui-font-weight--bold ui-button--white ui-color--light-blue ui-border-radius--11 w-100 mt-4"
+            routerLink="/register" type="button">Register
+    </button>
     <div class="text-center mt-3">
-        <label class="ui-text-decoration--underline ui-cursor--pointer ui-font-size--14 ui-color--dark-gray">Forgot your Password</label>
+        <label class="ui-text-decoration--underline ui-cursor--pointer ui-font-size--14 ui-color--dark-gray">Forgot your
+            Password</label>
     </div>
 </form>

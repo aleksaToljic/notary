@@ -45,6 +45,7 @@ import {HeaderComponent} from "./header/header.component";
 import { DashboardIndexComponent } from './dashboard/dashboard-index/dashboard-index.component';
 import {SessionService} from "./shared/session.service";
 import {AuthGuard} from "./shared/auth-guard.service";
+import {FileDropModule} from "ngx-file-drop";
 
 
 @NgModule({
@@ -87,7 +88,8 @@ import {AuthGuard} from "./shared/auth-guard.service";
         MatDialogModule,
         MatMenuModule,
         MatSlideToggleModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        FileDropModule
     ],
     providers: [
         ConfigService, SessionService, AuthGuard

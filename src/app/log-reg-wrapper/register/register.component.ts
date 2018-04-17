@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
 
     signupForm: FormGroup;
+    existingUser = false;
 
     constructor(private config: ConfigService, private http: HttpClient, private router: Router) {
     }
@@ -27,6 +28,13 @@ export class RegisterComponent implements OnInit {
                 'firstname': new FormControl(null, Validators.required)
             }),
         });
+        this.signupForm.valueChanges.subscribe(
+            (value) => {
+                if (this.existingUser) {
+                    this.existingUser = false;
+                }
+            }
+        );
     }
 
     register() {
@@ -42,8 +50,13 @@ export class RegisterComponent implements OnInit {
         })
             .subscribe(
                 res => {
-                    this.router.navigate(['login']);
+
                     console.log(res);
+                    if (res.toString() !== 'Successfully registered.') {
+                        this.existingUser = true;
+                    } else {
+                        this.router.navigate(['login']);
+                    }
                 },
                 err => {
                     console.log(err);

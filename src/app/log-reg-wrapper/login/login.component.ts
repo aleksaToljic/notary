@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ConfigService} from '../../config/config.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {SessionService} from "../../shared/session.service";
-import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'app-login',
@@ -14,6 +13,7 @@ import {Observable} from "rxjs/Observable";
 export class LoginComponent implements OnInit {
     signupForm: FormGroup;
     user: User = {username: '', password: '', email: '', firstname: '', lastname: ''};
+    wrongUserPass = false;
 
     constructor(private http: HttpClient, private config: ConfigService, private router: Router, private sessionService: SessionService) {
     }
@@ -27,7 +27,11 @@ export class LoginComponent implements OnInit {
             }),
         });
         this.signupForm.valueChanges.subscribe(
-            (value) => console.log(value)
+            (value) => {
+                if (this.wrongUserPass) {
+                    this.wrongUserPass = false;
+                }
+            }
         );
     }
 
@@ -38,11 +42,11 @@ export class LoginComponent implements OnInit {
             res => {
 
                 console.log(res);
-                if(res === 'Successfully logged in.') {
+                if (res.toString() === 'Successfully logged in.') {
                     this.sessionService.loggedin = true;
                     this.router.navigate(['notary']);
                 } else {
-
+                    this.wrongUserPass = true;
                 }
 
             },

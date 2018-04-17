@@ -50,6 +50,11 @@ export class DocumentComponent implements OnInit {
     myReader.onloadend = function(e){
       window.document.getElementById('viewer').setAttribute('src', myReader.result);
       loaded(file, myReader.result);
+      console.log('file');
+      console.log(file);
+      console.log('my reader ');
+      console.log(myReader);
+
     }
   }
 }
