@@ -4,3 +4,8 @@
   width: 100%;
   height: 100vh;
 }
+.ui-layout-center--background-none {
+  display: table;
+  width: 100%;
+  @include calc(height, '100vh - 56px');
+}

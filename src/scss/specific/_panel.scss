@@ -4,3 +4,23 @@
   @include vendor(box-shadow, -28px 0px 13px -28px $lr_shadow_color, 28px 0px 13px -28px $lr_shadow_color);
   //background: url("../assets/logo.svg");
 }
+
+.ui-agreement-animate {
+  &:hover {
+    .ui-icon--new-plus path:first-child, .ui-icon--new-plus path:nth-child(2) {
+      transform-origin: center;
+      @include vendor(animation, plus-scale 2s infinite);
+    }
+    .ui-icon--new-plus path:nth-child(2) {
+      @include vendor(animation-delay, .5s);
+      animation-direction: reverse;
+    }
+  }
+}
+.ui-panel--pdf-preview {
+  @include vendor(box-shadow, -28px 0px 13px -28px $lr_shadow_color, 28px 0px 13px -28px $lr_shadow_color, 0px -1px 13px 0px $lr_shadow_color);
+
+  @include calc(max-height, '100vh - 200px');
+  overflow-y: auto;
+  //max-width: 100%;
+}

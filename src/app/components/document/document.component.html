@@ -1,6 +1,30 @@
-<div id="document">
-  <div id="upload">
-    <input *ngIf="uploadMode" id="dragndrop" type="file" (change)="changeListener($event)" />
-    <iframe *ngIf="!uploadMode" id="viewer" src="http://localhost"></iframe>
-  </div>
+<!--<div id="s">-->
+    <!--<div id="a">-->
+
+        <!--<iframe style="width: 300px;height:300px" *ngIf="!uploadMode" id="viewer" src="http://localhost"></iframe>-->
+    <!--</div>-->
+<!--</div>-->
+<div style="border: 1px solid black;" class="position-relative" >
+    <file-drop (onFileDrop)="dropped($event)"
+               (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+        <!--<span>optional content (don't set headertext then)</span>-->
+        <span >Choose or Drag & Drop</span>
+        <input class="ui-file-drop--input"
+                 type="file" (change)="changeListener($event)"/>
+    </file-drop>
+
+    <!--<div class="upload-table">-->
+    <!--<table class="table">-->
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th>Name</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody class="upload-name-style">-->
+    <!--<tr *ngFor="let item of files; let i=index">-->
+    <!--<td><strong>{{ item.relativePath }}</strong></td>-->
+    <!--</tr>-->
+    <!--</tbody>-->
+    <!--</table>-->
+    <!--</div>-->
 </div>

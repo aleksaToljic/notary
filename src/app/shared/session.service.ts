@@ -1,8 +1,9 @@
-import {Injectable} from "@angular/core";
-import {ConfigService} from "../config/config.service";
-import {Router} from "@angular/router";
-import {Observable} from "rxjs/Observable";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {ConfigService} from '../config/config.service';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class SessionService {
@@ -10,6 +11,11 @@ export class SessionService {
     public address: string;
     public privateKey: string;
     public loggedin = false;
+    public currentDocument: DocumentProperties = {name: '', size: 0, hash: '', type: '', content: ''};
+    public documentUploaded = false;
+    documentUploadedSubject = new Subject();
+
+    // public fileDraggedOver = false;
 
     constructor(private http: HttpClient, private config: ConfigService, private router: Router) {
     }
@@ -17,7 +23,17 @@ export class SessionService {
     isLoggedIn() {
         const promise = new Promise(
             (resolve) => {
-                resolve(this.loggedin);
+                setTimeout(() => resolve(this.loggedin), 800);
+
+            }
+        );
+        return promise;
+    }
+    isUploaded() {
+        const promise = new Promise(
+            (resolve) => {
+                setTimeout(() => resolve(this.documentUploaded), 800);
+
             }
         );
         return promise;
@@ -33,7 +49,7 @@ export class SessionService {
                     this.router.navigate(['login']);
                 },
                 err => {
-                    console.log("Error occured");
+                    console.log('Error occured');
                 }
             );
     }
@@ -54,7 +70,7 @@ export class SessionService {
             headers: headers,
             responseType: 'text',
             withCredentials: true
-        }
+        };
     }
 
     // constructor(username: string, address: string, privateKey: string) {
@@ -71,3 +87,10 @@ export class SessionService {
 //     privateKey: any;
 //
 // }
+interface DocumentProperties {
+    name: string;
+    size: number;
+    hash: string;
+    type: string;
+    content: string;
+}

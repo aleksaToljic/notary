@@ -1,21 +1,12 @@
-#document {
-  
-}
-
-#upload {
-
-}
-
-#viewer {
-  width: 50vw;
-  height: -webkit-fill-available;
-}
-
-#dragndrop {
-  width: 50vw;
-  height: -webkit-fill-available;
-  margin: 0;
-  padding: 0;
-  outline: none;
-  opacity: 0;
+/*@import "../../../scss/tools/_mixins.scss";*/
+/*@import "../../../scss/settings/_settings.all.scss";*/
+/*@import "_mixins.scss";*/
+.ui-file-drop--input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  opacity:0;
+  outline: 0;
 }

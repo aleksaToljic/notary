@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class PreviewGuard implements CanActivate, CanActivateChild {
 
     constructor(private sessionService: SessionService, private router: Router) {
     }
@@ -14,12 +14,12 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     canActivate(route: ActivatedRouteSnapshot,
                 state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-        return this.sessionService.isLoggedIn().then(
+        return this.sessionService.isUploaded().then(
             (authenticated: boolean) => {
                 if (authenticated) {
                     return true;
                 } else {
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/notary/new-agreement']);
                 }
             }
         );

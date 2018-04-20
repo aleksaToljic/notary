@@ -21,7 +21,6 @@ import {
 import {AppComponent} from './app.component';
 import {LoginComponent} from './log-reg-wrapper/login/login.component';
 import {RegisterComponent} from './log-reg-wrapper/register/register.component';
-import {HomeComponent} from './components/home/home.component';
 import {NotaryComponent} from './components/notary/notary.component';
 import {DocumentComponent} from './components/document/document.component';
 import {WalletComponent} from './components/wallet/wallet.component';
@@ -36,16 +35,21 @@ import {
 
 import {ConfigService} from './config/config.service';
 import {AuditComponent} from './components/audit/audit.component';
-import {InlineSVGModule} from "ng-inline-svg";
-import {HttpClientModule} from "@angular/common/http";
-import {AppRoutingModule} from "./app-routing.module";
-import {LogRegWrapperComponent} from "./log-reg-wrapper/log-reg-wrapper.component";
+import {InlineSVGModule} from 'ng-inline-svg';
+import {HttpClientModule} from '@angular/common/http';
+import {AppRoutingModule} from './app-routing.module';
+import {LogRegWrapperComponent} from './log-reg-wrapper/log-reg-wrapper.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
-import {HeaderComponent} from "./header/header.component";
-import { DashboardIndexComponent } from './dashboard/dashboard-index/dashboard-index.component';
-import {SessionService} from "./shared/session.service";
-import {AuthGuard} from "./shared/auth-guard.service";
-import {FileDropModule} from "ngx-file-drop";
+import {HeaderComponent} from './header/header.component';
+import {DashboardIndexComponent} from './dashboard/dashboard-index/dashboard-index.component';
+import {SessionService} from './shared/session.service';
+import {AuthGuard} from './shared/auth-guard.service';
+import {FileDropModule} from 'ngx-file-drop';
+import {NewAgreementComponent} from './components/new-agreement/new-agreement.component';
+import {PdfViewerModule} from 'ng2-pdf-viewer';
+import {PreviewComponent} from './components/new-agreement/preview/preview.component';
+import {PreviewGuard} from './shared/preview-guard.service';
+import {DropdownDirective} from './shared/dropdown.directive';
 
 
 @NgModule({
@@ -53,7 +57,6 @@ import {FileDropModule} from "ngx-file-drop";
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        HomeComponent,
         NotaryComponent,
         HeaderComponent,
         DocumentComponent,
@@ -67,7 +70,10 @@ import {FileDropModule} from "ngx-file-drop";
         AuditComponent,
         LogRegWrapperComponent,
         DashboardComponent,
-        DashboardIndexComponent
+        DashboardIndexComponent,
+        NewAgreementComponent,
+        PreviewComponent,
+        DropdownDirective
     ],
     imports: [
         BrowserModule,
@@ -89,10 +95,11 @@ import {FileDropModule} from "ngx-file-drop";
         MatMenuModule,
         MatSlideToggleModule,
         MatCheckboxModule,
-        FileDropModule
+        FileDropModule,
+        PdfViewerModule
     ],
     providers: [
-        ConfigService, SessionService, AuthGuard
+        ConfigService, SessionService, AuthGuard, PreviewGuard
     ],
     entryComponents: [
         SignDialog,

@@ -23,7 +23,9 @@
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "scss/styles.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/pdfjs-dist/build/pdf.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -59,5 +61,11 @@
     "styleExt": "scss",
     "component": {
     }
+  },
+  "stylePreprocessorOptions": {
+    "includePaths": [
+      "scss/settings",
+      "scss/tools"
+    ]
   }
 }

@@ -1,9 +1,19 @@
 .form-control:focus {
   @include vendor(box-shadow, none);
 }
+
 .form-control {
   border: 1px solid $lr_border_color;
   font-size: 14px;
   padding: 0.5rem .75rem;
   @include vendor(border-radius, 6px);
+}
+
+.drop-zone {
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.show .dropdown-menu {
+  display: block;
 }

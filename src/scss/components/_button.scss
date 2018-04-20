@@ -30,7 +30,7 @@
     background: darken($lightblue_color, 15%);
   }
 }
-
+//.ui-button--outline--none
 .ui-button--white {
   background: $white;
   border: 1px solid $lr_border_color;
@@ -39,6 +39,22 @@
   }
   &:active {
     background: $lr_border_color;
+  }
+}
+
+.ui-button--close {
+  rect {
+    @include vendor-o(transition, fill .8s);
+  }
+  &:hover {
+    rect {
+      fill: $lightblue_color;
+      //transform: none;
+      @include vendor(animation, rect-close-animate .4s);
+    }
+  }
+  &:focus {
+    outline: 0;
   }
 }
 

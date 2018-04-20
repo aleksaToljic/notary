@@ -1,17 +1,20 @@
-
 //font-size clases .ui-font-size--13
-@include create_base_class_px(font-size,13);
-@include create_base_class_px(font-size,14);
-@include create_base_class_px(font-size,36);
+@include create_base_class_px(font-size, 12);
+@include create_base_class_px(font-size, 13);
+@include create_base_class_px(font-size, 14);
+@include create_base_class_px(font-size, 36);
 
-@include create_base_class_px(width,106);
-@include create_base_class_px(width,190);
+@include create_base_class_px(width, 16);
+@include create_base_class_px(width, 100);
+@include create_base_class_px(width, 106);
+@include create_base_class_px(width, 190);
 
-@include create_base_class_px(max-width,330);
+@include create_base_class_px(height, 16);
 
+@include create_base_class_px(max-width, 330);
 
 //border radius classes .ui-border-radius--11
-@include create_base_class_px(border-radius,11);
+@include create_base_class_px(border-radius, 11);
 
 //color classes .ui-color--dark-red
 @include create_base_class(color, $darkred_color, dark-red);
@@ -22,6 +25,9 @@
 @include create_base_class(color, $black_semilight_color, black-semilight);
 @include create_base_class(color, $light_gray_color, light-gray);
 
+//@include create_base_class(background, none);
+//@include create_base_class(border, 0, none);
+//@include create_base_class(outline, 0, none);
 
 @include create_base_class(display, table);
 @include create_base_class(display, table-row);
@@ -39,6 +45,10 @@
   @include calc(height, '100vh - 56px');
 }
 
+.ui-width--full-100 {
+  @include calc(width, '100% - 100px');
+}
+
 //class used for clearing floats use it on <p> tags only
 .clear {
   clear: both;
@@ -51,4 +61,9 @@
 .ui-separator--top-gray {
   border-top: 1px solid $lr_border_color;
 }
-
+.ui-separator--bottom-gray {
+  border-bottom: 1px solid $lr_border_color;
+}
+.ui-border--light-blue {
+  border: 1px solid #CCE3F2;
+}
