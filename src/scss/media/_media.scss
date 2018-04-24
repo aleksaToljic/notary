@@ -1,0 +1,30 @@
+@media screen and (max-width: 767px) {
+  //.ui-row-pdf-fix {
+  //  display: block !important;
+  //  width: 100%;
+  //  max-width: 100%;
+  //  > div {
+  //    display: block;
+  //    max-width: 100% !important;
+  //  }
+  //}
+  //.ui-container-pdf-fix {
+  //  display: block;
+  //  max-width: 100%;
+  //}
+  //.ui-layout-center--background-none {
+  //  width: 100%;
+  //  display: block;
+  //  height: auto;
+  //}
+  pdf-viewer {
+    //max-width: 100vw !important;
+    max-width: 540px !important;
+    //@include calc(max-width, '100vw - 65px', true);
+  }
+}
+@media screen and (max-width: 576px) {
+  pdf-viewer {
+    @include calc(max-width, '100vw - 65px', true);
+  }
+}

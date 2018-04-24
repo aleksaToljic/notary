@@ -1,0 +1,57 @@
+<div class="container ui-container-pdf-fix ">
+    <div class=" ui-layout-center--background-none">
+        <div class="ui-display--table-row">
+            <div class="col-xl-12 ui-display--table-cell ui-vertical-align--middle p-0">
+                <div class="row ui-row-pdf-fix">
+                    <div class="col-xl-4 col-lg-5">
+                        <div class="ui-panel--login ui-agreement-animate mx-auto mt-5 p-4">
+                            <div class="ui-panel__header ui-color--light-blue mb-4 pb-3 mt-5 ui-separator--bottom-gray ui-font-weight--bold">
+                                New Agreement
+                                <button routerLink="/notary"
+                                        class="ui-width--16 ui-button--close ui-cursor--pointer ui-outline--none border-0 bg-white p-0 float-right ui-height--16">
+                                    <span inlineSVG="../../../assets/icon-x.svg"></span>
+                                </button>
+                            </div>
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="btn-group float-left mb-3 mt-5" appDropdown>
+                            <button type="button"
+                                    class="btn btn-light ui-font-size--12 ui-border--light-blue dropdown-toggle">
+                                Page 1<span
+                                    class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" style="cursor: pointer">Page 1</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" style="cursor: pointer">Page 2</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" style="cursor: pointer">Page 3</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-light float-right mb-3 mt-5 ui-font-size--12 ui-border--light-blue">
+                            Download
+                        </button>
+                        <p class="clear"></p>
+                        <div class="ui-panel--pdf-preview ">
+                            <div class="some-pdf-container">
+
+                                <pdf-viewer style="width: 100%;max-width: 730px" class="d-block ui-max-width--full-360"
+                                            [original-size]="false" [fit-to-page]="true"
+                                            [autoresize]="true"
+                                            [src]="sessionService.currentDocument.content"></pdf-viewer>
+                                <!--<ngx-imageviewer src="https://www.tutorialspoint.com/java/java_tutorial.pdf"></ngx-imageviewer>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

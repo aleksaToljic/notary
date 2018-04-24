@@ -1,12 +1,9 @@
-
-
 ///*------------------------------------*\
 //    #BUTTON
 //\*------------------------------------*/
 
-
 .btn {
-  @include vendor-o(transition,background-color .4s ease,box-shadow .4s ease);
+  @include vendor-o(transition, background-color .4s ease, box-shadow .4s ease);
   position: relative;
   padding: 0 18px;
   //border: 0;
@@ -15,11 +12,10 @@
   font-family: $font_1;
   cursor: pointer;
   &:focus {
-    @include vendor(box-shadow,0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12) );
+    @include vendor(box-shadow, 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12));
   }
 
 }
-
 
 .ui-button--blue {
   background: $lightblue_color;
@@ -30,6 +26,17 @@
     background: darken($lightblue_color, 15%);
   }
 }
+
+.ui-button--green {
+  background: $lightgreen_color;
+  &:hover, &:focus {
+    background: lighten($lightgreen_color, 15%);
+  }
+  &:active {
+    background: darken($lightgreen_color, 15%);
+  }
+}
+
 //.ui-button--outline--none
 .ui-button--white {
   background: $white;
@@ -50,7 +57,7 @@
     rect {
       fill: $lightblue_color;
       //transform: none;
-      @include vendor(animation, rect-close-animate .4s);
+      @include vendor-all(animation, rect-close-animate .4s);
     }
   }
   &:focus {

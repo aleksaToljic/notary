@@ -50,6 +50,11 @@ import {PdfViewerModule} from 'ng2-pdf-viewer';
 import {PreviewComponent} from './components/new-agreement/preview/preview.component';
 import {PreviewGuard} from './shared/preview-guard.service';
 import {DropdownDirective} from './shared/dropdown.directive';
+import { PreviewWrapperComponent } from './components/new-agreement/preview-wrapper/preview-wrapper.component';
+import { PreviewStep2Component } from './components/new-agreement/preview/preview-step-2/preview-step-2.component';
+import { PreviewStep3Component } from './components/new-agreement/preview/preview-step-3/preview-step-3.component';
+import { SigneesListComponent } from './components/signees-list/signees-list.component';
+import { StorageComponent } from './components/storage/storage.component';
 
 
 @NgModule({
@@ -73,7 +78,12 @@ import {DropdownDirective} from './shared/dropdown.directive';
         DashboardIndexComponent,
         NewAgreementComponent,
         PreviewComponent,
-        DropdownDirective
+        DropdownDirective,
+        PreviewWrapperComponent,
+        PreviewStep2Component,
+        PreviewStep3Component,
+        SigneesListComponent,
+        StorageComponent
     ],
     imports: [
         BrowserModule,

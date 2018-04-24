@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
         }).map(res => res.json()).subscribe((data) => {
             if (Object.keys(data).length === 0) {
                 // if notary, rediret to login
-                //this.router.navigateByUrl('/login');
+                // this.router.navigateByUrl('/login');
                 // trnutno console.log(this.router.url)
             } else {
                 this.sessionService.username = data['username'];

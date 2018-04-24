@@ -1,16 +1,90 @@
-/* You can add global styles to this file, and also import other style files */
+/**
+ * @author Tolja
+ *
+ * CONTENTS
+ *
+ * TOOLS
+ * Mixins.................All mixins and functions in notary app.
+ *
+ * SETTINGS
+ * Colors..................Manage our color palette in isolation.
+ * Fonts..................All fonts and font-sizes.
+ * Images.................All images in our app.
+ *
+ * BASE
+ * Body...................root styles.
+ * Links..................Hyperlink styles.
+ * Base helpers........... Simple helper classes.
+ * Animation..............All our animations.
+ *
+ * COMPONENTS (components are kinda like BASE just for every component, here should be classes that can be reused, and that won't be overridden)
+ * Layout.................ui-layout, elements inside and their modifiers.
+ * Button.................ui-button, elements inside and their modifiers.
+ *
+ *
+ * SPECIFIC
+ * Layout.................Specific layoutUnits.
+ * Panel..................Specific panels.
+ * Helpers................Specific, more complex, unique classes.
+ *
+ * ICONS
+ * Icons..................All the icons in notary app.
+ *
+ *
+ * NOTE: NEVER OVERRIDE only if you must and only with specific styles and @media!! no style should override another style,
+ * it is always better to create another class then overriding.
+ *
+ */
 
-@import "settings/settings.all";
+/**
+ * #TOOLS
+ */
 @import "tools/mixins";
 
+/**
+ * #SETTINGS
+ */
+@import "settings/settings.all";
+
+/**
+ * #BASE
+ */
 @import "base/base";
 @import "base/helpers";
+@import "animation/animation";
 
+/**
+ * #COMPONENTS
+ */
 @import "components/button";
 @import "components/layout";
 
+/**
+ * #SPECIFIC
+ */
 @import "specific/panel";
 @import "specific/layout";
 @import "specific/helpers";
 
-@import "animation/animation";
+/**
+ * #ICONS
+ */
+@import "icons/icons";
+
+/**
+ * #MEDIA
+ */
+@import "media/media";
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@
     <div class=" ui-layout-center--background-none">
         <div class="ui-display--table-row">
             <div class="col-xl-12 ui-display--table-cell ui-vertical-align--middle p-0">
-                <div class="ui-panel--login ui-agreement-animate m-auto p-4">
+                <div class="ui-panel--login ui-agreement-animate mx-auto mt-5 p-4">
                     <div class="ui-panel__header ui-color--light-blue mb-4 pb-3 mt-5 ui-separator--bottom-gray ui-font-weight--bold">
                         New Agreement
                         <button routerLink="/notary"
@@ -13,7 +13,7 @@
                     <div class="d-table w-100 mb-4">
                         <div class="d-table-row">
                             <div class="d-table-cell ui-width--100 align-middle">
-                                <div class="ui-icon--new-plus" inlineSVG="../../../assets/icon-new-plus.svg"></div>
+                                <div class="ui-icon--new-plus ui-width--100" inlineSVG="../../../assets/icon-new-plus.svg"></div>
                             </div>
                             <div class="d-table-cell align-middle pl-2">
                                 <span class="ui-font-weight--bold ui-font-size--18">Upload Your Agreement</span>
@@ -26,7 +26,7 @@
                     <app-document></app-document>
                     <div class="text-center my-5">
                         <button routerLink="preview" [disabled]="!sessionService.documentUploaded"
-                                class=" w-50 btn col ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
+                                class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
                             Next
                         </button>
                     </div>

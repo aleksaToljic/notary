@@ -1,6 +1,6 @@
 @include keyframes(rect-close-animate) {
   0% {
-    @include vendor(transform,aa);
+    @include vendor(transform, aa);
   }
   50% {
     @include vendor(transform, none);
@@ -10,16 +10,14 @@
   }
 }
 
-
-
 @include keyframes(plus-scale) {
   0% {
-    @include vendor(transform, scale(1));
+    @include vendor-all(transform, scale(1));
   }
   50% {
-    @include vendor(transform, scale(0));
+    @include vendor-all(transform, scale(0));
   }
   100% {
-    @include vendor(transform, scale(1));
+    @include vendor-all(transform, scale(1));
   }
 }

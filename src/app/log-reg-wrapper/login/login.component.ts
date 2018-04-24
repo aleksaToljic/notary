@@ -3,7 +3,7 @@ import {ConfigService} from '../../config/config.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {SessionService} from "../../shared/session.service";
+import {SessionService} from '../../shared/session.service';
 
 @Component({
     selector: 'app-login',

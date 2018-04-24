@@ -2,7 +2,6 @@
   max-width: 360px;
   background: $white_transparent_95;
   @include vendor(box-shadow, -28px 0px 13px -28px $lr_shadow_color, 28px 0px 13px -28px $lr_shadow_color);
-  //background: url("../assets/logo.svg");
 }
 
 .ui-agreement-animate {
@@ -13,14 +12,18 @@
     }
     .ui-icon--new-plus path:nth-child(2) {
       @include vendor(animation-delay, .5s);
-      animation-direction: reverse;
+      @include vendor(animation-direction, reverse);
     }
   }
 }
+
 .ui-panel--pdf-preview {
   @include vendor(box-shadow, -28px 0px 13px -28px $lr_shadow_color, 28px 0px 13px -28px $lr_shadow_color, 0px -1px 13px 0px $lr_shadow_color);
-
-  @include calc(max-height, '100vh - 200px');
+  @include calc(max-height, '100vh - 160px');
+  max-width: 100%;
   overflow-y: auto;
-  //max-width: 100%;
+}
+
+.ui-panel--storage {
+  @include vendor(box-shadow, -28px 0px 13px -28px $lr_shadow_color, 28px 0px 13px -28px $lr_shadow_color, 0px -1px 13px 0px $lr_shadow_color);
 }

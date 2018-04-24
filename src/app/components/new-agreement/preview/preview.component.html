@@ -1,74 +1,50 @@
-<div class="container">
-    <div class=" ui-layout-center--background-none">
-        <div class="ui-display--table-row">
-            <div class="col-xl-12 ui-display--table-cell ui-vertical-align--middle p-0">
-                <div class="row">
-                    <div class="col-12 col-xl-4 col-lg-5">
-                        <div class="ui-panel--login ui-agreement-animate m-auto p-4">
-                            <div class="ui-panel__header ui-color--light-blue mb-4 pb-3 mt-5 ui-separator--bottom-gray ui-font-weight--bold">
-                                New Agreement
-                                <button routerLink="../"
-                                        class="ui-width--16 ui-button--close ui-cursor--pointer ui-outline--none border-0 bg-white p-0 float-right ui-height--16">
-                                    <span inlineSVG="../../../assets/icon-x.svg"></span>
-                                </button>
-                            </div>
-                            <div class="d-table w-100 mb-4">
-                                <div class="d-table-row">
-                                    <div class="d-table-cell ui-width--100 align-middle">
-                                        <div class="ui-icon--new-plus"
-                                             inlineSVG="../../../assets/icon-new-plus.svg"></div>
-                                    </div>
-                                    <div class="d-table-cell align-middle pl-2">
-                                        <span class="ui-font-weight--bold ui-font-size--18">Upload Your Agreement</span>
-                                        <p class="clear"></p>
-                                        <span class="ui-font-size--14  ui-color--light-gray">Lorem ipsum dolor sit amet,
+<div class="d-table w-100 mb-4">
+    <div class="d-table-row">
+        <div class="d-table-cell ui-width--100 align-middle">
+            <div class="ui-icon--new-plus"
+                 inlineSVG="../../../assets/icon-signers.svg"></div>
+        </div>
+        <div class="d-table-cell align-middle pl-2">
+            <span class="ui-font-weight--bold ui-font-size--18">Select Signers</span>
+            <p class="clear"></p>
+            <span class="ui-font-size--14  ui-color--light-gray">Lorem ipsum dolor sit amet,
                             has facer dicit ei, cu mel </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <app-document></app-document>
-                            <div class="text-center my-5">
-                                <button
-                                        class=" w-50 btn col ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
-                                    Next
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-xl-8 col-lg-7">
-                        <div class="btn-group float-left" appDropdown>
-                            <button type="button" class="btn btn-light my-3 ui-font-size--12 ui-border--light-blue dropdown-toggle">Page 1<span
-                                    class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" style="cursor: pointer">Page 1</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" style="cursor: pointer">Page 2</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" style="cursor: pointer">Page 3</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <button class="btn btn-light float-right my-3 ui-font-size--12 ui-border--light-blue">Download
-                        </button>
-                        <p class="clear"></p>
-                        <div class="ui-panel--pdf-preview ">
-                            <div class="some-pdf-container">
-
-                                <pdf-viewer style="width: 100%;max-width: 730px" class="d-block ui-max-width--full-360"
-                                            [original-size]="false" [fit-to-page]="true"
-                                            (after-load-complete)="callBackFn($event)" [autoresize]="true"
-                                            [src]="sessionService.currentDocument.content"></pdf-viewer>
-                                <!--<ngx-imageviewer src="https://www.tutorialspoint.com/java/java_tutorial.pdf"></ngx-imageviewer>-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
         </div>
     </div>
 </div>
+
+<select (change)="onSelect($event.target.value)" class="custom-select my-1 mr-sm-2">
+    <option selected>Select</option>
+    <option value="1">Only you</option>
+    <option value="2">You & Second Party</option>
+    <option value="3">Multiple Parties</option>
+</select>
+<form (ngSubmit)="onInvite(f)" #f="ngForm">
+    <!--<app-document></app-document>-->
+    <div *ngIf="meAndSecond">
+
+        <input class="form-control mt-2" name="user" required ngModel placeholder="example@email.com or username123">
+        <textarea class="form-control mt-2" name="message" ngModel required placeholder="Optional message"></textarea>
+
+    </div>
+
+    <div class="text-center my-5">
+        <button type="submit" *ngIf="showNext && meAndSecond"
+                class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
+            Next
+        </button>
+        <!--<label class="ui-color&#45;&#45;light-gray ui-font-size&#45;&#45;14 ml-3">Skip</label>-->
+    </div>
+</form>
+<form (ngSubmit)="onMultipleInvite(f2)" #f2="ngForm">
+    <div *ngIf="multiple">
+        <input class="form-control mt-2" name="users" required ngModel
+               placeholder="example@email.com,username123,...">
+        <textarea class="form-control mt-2" name="message" ngModel required placeholder="Optional message"></textarea>
+
+    </div>
+    <button type="submit" *ngIf="showNext && multiple"
+            class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
+        Next
+    </button>
+</form>

@@ -10,8 +10,12 @@
 }
 
 .drop-zone {
-  border: 0 !important;
-  border-radius: 0 !important;
+  height: 170px !important;
+  @include vendor(border-radius, 4px !important);
+  border: 1px solid $lr_border_color !important;
+}
+.content {
+  height: 170px !important;
 }
 
 .show .dropdown-menu {

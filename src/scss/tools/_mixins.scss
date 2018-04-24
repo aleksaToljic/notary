@@ -1,4 +1,3 @@
-
 ///*------------------------------------*\
 //    #MIXINS
 //\*------------------------------------*/
@@ -14,6 +13,14 @@
 @mixin vendor-o($property, $value...) {
   -webkit-#{$property}: $value;
   -moz-#{$property}: $value;
+  -o-#{$property}: $value;
+  #{$property}: $value;
+}
+//also vendor but added opera as well, used for example transition property
+@mixin vendor-all($property, $value...) {
+  -webkit-#{$property}: $value;
+  -moz-#{$property}: $value;
+  -ms-#{$property}: $value;
   -o-#{$property}: $value;
   #{$property}: $value;
 }
@@ -37,8 +44,7 @@
   $string: null;
   @if $isImportant == true {
     $string: !important;
-  }
-  @else {
+  } @else {
     $string: null;
   }
   #{$property}: -moz-calc(#{$expression}) $string;
@@ -55,14 +61,13 @@
 
 // set .ui-color--dark-red
 @mixin create_base_class($property , $value, $class:null) {
-  @if($class == null) {
+  @if ($class == null) {
     $class: $value;
   }
   .ui-#{$property}--#{$class} {
     #{$property}: #{$value};
   }
 }
-
 
 @mixin display_flex {
   -ms-box-orient: horizontal;
@@ -107,18 +112,22 @@
   }
 }
 
-
 //functions  ******************************************************************************************************************************************
 
 //function to check items in list and return true if there is any unit e.g px,em
 @function contains-number($list) {
   $contains: false;
-  @each $item in $list { @if unitless($item) { $contains: true; } }
+  @each $item in $list {
+    @if unitless($item) {
+      $contains: true;
+    }
+  }
   @return $contains;
 }
+
 //function to change current background-position to desired one according to your desired width and height e.g change-backround-position(44,34,-1731 - 2(if you want to change a bit the result))
-@function change-backround-position($desired-width,$current-width,$current-y-axis){
-  $list: $desired-width,$current-width,$current-y-axis;
+@function change-backround-position($desired-width,$current-width,$current-y-axis) {
+  $list: $desired-width, $current-width, $current-y-axis;
   @if contains-number($list) {
     @return unquote(round($desired-width / $current-width * $current-y-axis) + 'px');
   } @else {

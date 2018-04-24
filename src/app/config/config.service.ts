@@ -1,6 +1,6 @@
 export class ConfigService {
 
-    server_host = 'localhost';
+    server_host = '192.168.88.75';
     server_port = '3000';
     server: string = this.server_host + ':' + this.server_port + '/';
     ssl = false;

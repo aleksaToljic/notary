@@ -10,6 +10,10 @@ import {AuthGuard} from './shared/auth-guard.service';
 import {NewAgreementComponent} from './components/new-agreement/new-agreement.component';
 import {PreviewComponent} from './components/new-agreement/preview/preview.component';
 import {PreviewGuard} from './shared/preview-guard.service';
+import {PreviewWrapperComponent} from './components/new-agreement/preview-wrapper/preview-wrapper.component';
+import {PreviewStep2Component} from './components/new-agreement/preview/preview-step-2/preview-step-2.component';
+import {PreviewStep3Component} from './components/new-agreement/preview/preview-step-3/preview-step-3.component';
+import {StorageComponent} from './components/storage/storage.component';
 
 const appRoutes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -25,7 +29,14 @@ const appRoutes: Routes = [
             {path: '', component: DashboardIndexComponent},
             {path: 'audit', component: AuditComponent},
             {path: 'new-agreement', component: NewAgreementComponent},
-            {path: 'new-agreement/preview', canActivate: [PreviewGuard], component: PreviewComponent}
+            {
+                path: 'new-agreement/preview', component: PreviewWrapperComponent, children: [
+                    {path: '', component: PreviewComponent},
+                    // {path: '2', component: PreviewStep2Component},
+                    {path: '3', component: PreviewStep3Component}
+                ]
+            },
+            {path: 'storage', component: StorageComponent}
         ]
     },
     {path: '**', redirectTo: '/login'}

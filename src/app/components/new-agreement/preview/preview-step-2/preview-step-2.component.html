@@ -1,0 +1,36 @@
+<div class="d-table w-100 mb-4">
+  <div class="d-table-row">
+    <div class="d-table-cell ui-width--100 align-middle">
+      <div class="ui-icon--new-plus"
+           inlineSVG="../../../assets/icon-place-signature.svg"></div>
+    </div>
+    <div class="d-table-cell align-middle pl-2">
+      <span class="ui-font-weight--bold ui-font-size--18">Place Digital Signature</span>
+      <p class="clear"></p>
+      <span class="ui-font-size--14  ui-color--light-gray">Lorem ipsum dolor sit amet,
+                            has facer dicit ei, cu mel </span>
+    </div>
+  </div>
+</div>
+<form [formGroup]="inviteForm" (ngSubmit)="invite()">
+
+</form>
+<select class="custom-select my-1 mr-sm-2"  >
+  <option selected>Select</option>
+  <option value="1">Aleksa</option>
+  <option value="2">Tolja</option>
+  <option value="3">Krsta</option>
+</select>
+<!--<app-document></app-document>-->
+<div class="text-center my-5">
+  <button routerLink="../"
+          class=" btn  w-49 ui-button--white ui-color--light-blue ui-font-size--14">
+    Back
+  </button>
+  <!--<button class=" mr-1 btn col ui-button&#45;&#45;blue ui-color&#45;&#45;white ui-font-weight&#45;&#45;bold ui-font-size&#45;&#45;14" routerLink="new-agreement">New Agreement</button>-->
+  <!--<button class=" ml-1 btn col ui-button&#45;&#45;white  ui-font-weight&#45;&#45;bold ui-color&#45;&#45;light-blue" routerLink="audit">Audit</button>-->
+  <button routerLink="../3"
+          class=" btn  w-49 ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
+    Next
+  </button>
+</div>
