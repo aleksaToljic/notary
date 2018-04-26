@@ -1,1 +1,13 @@
 <router-outlet></router-outlet>
+<div *ngIf="blocked" class="ui-dialog--block">
+    <div class="ui-display--table ui-height--full-browser-56 w-100">
+        <div class=" ui-display--table-row">
+            <div class="ui-display--table-cell text-center align-middle">
+                <div class="d-inline-block text-center bg-white p-4">
+                    Your application is blocked
+                    <button class="btn btn-light" (click)="blocked = false">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

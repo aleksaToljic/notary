@@ -1,14 +1,8 @@
-<!--<mat-toolbar id="nav">-->
-<!--{{ title }}-->
-<!--<div *ngIf="loggedin" id="user-section" [matMenuTriggerFor]="menu">Hi, {{ username }}</div> &lt;!&ndash; plus logout dugme, i login &ndash;&gt;-->
-<!--<mat-menu #menu="matMenu">-->
-<!--<button mat-menu-item>My Profile</button>-->
-<!--<a (click)="logout()"><button mat-menu-item>Logout</button></a>-->
-<!--</mat-menu>-->
-<!--</mat-toolbar>-->
 
 <nav class="navbar-expand-lg navbar navbar-light ui-layout-west bg-white ui-font-size--14">
-    <a class="navbar-brand" routerLink="/notary"><div class="ui-width--106 ui-line-height--0" [inlineSVG]="'/assets/logo.svg'"></div></a>
+    <a class="navbar-brand" routerLink="/notary">
+        <div class="ui-width--106 ui-line-height--0" [inlineSVG]="'/assets/logo.svg'"></div>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -17,16 +11,20 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li routerLinkActive="active" class="nav-item">
-            <a class="nav-link" routerLink="/notary/storage">Storage</a>
+                <a class="nav-link" routerLink="/notary/storage">Storage</a>
             </li>
             <!--<li class="nav-item" routerLinkActive="active">-->
             <!--<a class="nav-link" routerLink="/register">Register</a>-->
             <!--</li>-->
 
         </ul>
-        <ul class="navbar-nav float-right">
-            <li class="nav-item " *ngIf="sessionService.loggedin">
-                <a class="nav-link disabled" >{{ sessionService.username }}</a>
+        <ul class="navbar-nav float-right" *ngIf="sessionService.loggedin">
+            <li class="nav-item ui-width--15 mr-2 ui-margin-top--10">
+                <app-notification></app-notification>
+
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link disabled">{{ sessionService.username }}</a>
 
             </li>
             <li class="nav-item ">

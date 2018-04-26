@@ -10,12 +10,43 @@
 </div>
 <app-signees-list></app-signees-list>
 <div class="text-center my-5">
-    <button routerLink="../"
-            class=" btn  w-49 ui-button--white ui-color--light-blue ui-font-size--14">
-        Reject
+    <button (click)="disagree()" class=" btn  w-49 ui-button--white ui-color--light-blue ui-font-size--14">
+        Disagree
     </button>
-    <button
+    <button (click)="agree()"
             class=" btn  w-49 ui-button--green ui-color--white ui-font-weight--bold ui-font-size--14">
-        SIGN
+        Agree
     </button>
+</div>
+<div *ngIf="signDialog" class="ui-dialog--block">
+    <div class="ui-display--table ui-height--full-browser-56 w-100">
+        <div class=" ui-display--table-row">
+            <div class="ui-display--table-cell text-center align-middle">
+                <div class="d-inline-block text-center bg-white p-4">
+                    <form (ngSubmit)="onSign(f2)" #f2="ngForm">
+                        <input name="pass" required ngModel class="form-control">
+                        <button class="btn btn-primary">Ok</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="signed" class="ui-dialog--block">
+    <div class="ui-display--table ui-height--full-browser-56 w-100">
+        <div class=" ui-display--table-row">
+            <div class="ui-display--table-cell text-center align-middle">
+                <div class="d-inline-block text-center bg-white p-4">
+                    <!--<form (ngSubmit)="onSign(f2)" #f2="ngForm">-->
+                    <!--<input name="pass" required ngModel class="form-control">-->
+                    <!--<button class="btn btn-light">Ok</button>-->
+                    <!--</form>-->
+                    <span>Your transaction hash is: </span>
+                    <a href="https://kovan.etherscan.io/tx/{{transactionHash}}">{{ transactionHash }}</a>
+
+                    <button class="btn btn-primary" (click)="signed = false">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

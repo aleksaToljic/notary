@@ -4,10 +4,17 @@
             <div class="ui-display--table ui-height--full-browser-56 w-100">
                 <div class=" ui-display--table-row">
                     <div class="ui-display--table-cell align-middle">
-                        <div class="ui-panel--storage" *ngFor="let file of files;">
-                            <span class="ui-cursor--pointer ui-color--light-blue ui-outline--none" (click)="openFile(file.name)">{{ file.name }}</span>
-                            <span class="float-right">{{ file.size }} MB</span>
-                            <!--<span class=""></span>-->
+                        <div class="ui-panel--storage" >
+                            <div class="ui-separator--bottom-gray p-3 mx-3 d-table w-100" *ngFor="let file of files;">
+                                <span class="d-inline-block ui-width--30">
+                                    <span *ngIf="getTypeIcon(file.fileType) != ''"
+                                          [inlineSVG]="getTypeIcon(file.fileType)"></span>
+                                </span>
+                                <span class="ui-cursor--pointer ui-color--light-blue ui-outline--none"
+                                      (click)="openFile(file.name)">{{ file.name.substr(1,file.name.length) }}</span>
+                                <span class="float-right">{{ file.size }} MB</span>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -15,3 +22,5 @@
         </div>
     </div>
 </div>
+
+

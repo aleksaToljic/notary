@@ -46,13 +46,23 @@ export class StorageComponent implements OnInit {
             responseType: 'text',
             withCredentials: true
         }).subscribe(res => {
-            let files = JSON.parse(res);
+            const files = JSON.parse(res);
 
             console.log(files);
             for (let i = 0; i < files.length; i++) {
+                let extension: string;
+                if (files[i].name.split('.').pop().startsWith('/')) {
+                    extension = '';
+                } else {
+                    extension = files[i].name.split('.').pop();
+                }
+
+                // extension.findIndex(extension.length - 1);
+                console.log(extension);
                 this.files.push({
                     name: files[i].name,
-                    size: parseFloat((files[i].fileInfo['{DAV:}getcontentlength'] / (1024 * 1024)).toFixed(2))
+                    size: parseFloat((files[i].fileInfo['{DAV:}getcontentlength'] / (1024 * 1024)).toFixed(2)),
+                    fileType: extension
                 });
             }
 
@@ -60,10 +70,18 @@ export class StorageComponent implements OnInit {
         }, err => console.log(err));
     }
 
+    getTypeIcon(extension) {
+        if (extension == 'pdf') {
+            return '../../../assets/icon-pdf.svg';
+        } else {
+            return 'aa';
+        }
+    }
 }
 
 
 interface File {
     name: string;
     size: number;
+    fileType: string;
 }

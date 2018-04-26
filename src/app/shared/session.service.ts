@@ -14,6 +14,7 @@ export class SessionService {
     public currentDocument: DocumentProperties = {name: '', size: 0, hash: '', type: '', content: ''};
     public documentUploaded = false;
     documentUploadedSubject = new Subject();
+    public currentEvents = [];
 
     // public fileDraggedOver = false;
 
@@ -29,6 +30,7 @@ export class SessionService {
         );
         return promise;
     }
+
     isUploaded() {
         const promise = new Promise(
             (resolve) => {

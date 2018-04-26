@@ -30,7 +30,7 @@ const appRoutes: Routes = [
             {path: 'audit', component: AuditComponent},
             {path: 'new-agreement', component: NewAgreementComponent},
             {
-                path: 'new-agreement/preview', component: PreviewWrapperComponent, children: [
+                path: 'new-agreement/preview', canActivate: [PreviewGuard], component: PreviewWrapperComponent, children: [
                     {path: '', component: PreviewComponent},
                     // {path: '2', component: PreviewStep2Component},
                     {path: '3', component: PreviewStep3Component}

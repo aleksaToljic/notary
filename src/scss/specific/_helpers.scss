@@ -14,10 +14,23 @@
   @include vendor(border-radius, 4px !important);
   border: 1px solid $lr_border_color !important;
 }
+
 .content {
   height: 170px !important;
 }
 
 .show .dropdown-menu {
   display: block;
+}
+
+.ui-notification .dropdown-menu {
+  right: 34px;
+  top: 56px;
+  width: 300px;
+  left: auto;
+  cursor: default;
+}
+
+.ui-notification .active path {
+  stroke: $darkred_color;
 }

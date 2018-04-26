@@ -1,0 +1,23 @@
+<span appClickOutside class="ui-cursor--pointer show ui-notification">
+    <span class="hell" [ngClass]="{active: notifications.length > 0}"
+          inlineSVG="../../../assets/icon-notification.svg"></span>
+    <div class="dropdown-menu">
+        <div class="px-3">
+            <div class="ui-separator--bottom-gray pb-2">
+                <span class="ui-font-size--14 ui-font-weight--bold ui-color--black-semilight">Notifications </span>
+                <span class="ui-font-size--14 ui-color--black-semilight"> ({{ notifications.length }})</span>
+            </div>
+            <div class="py-2 ui-separator--bottom-gray" *ngFor="let notification of notifications">
+                <span class="ui-color--black-semilight ui-font-size--14 ui-font-weight--bold">{{ notification.inviterUsername }}</span>
+                <p class="clear"></p>
+                <span class="ui-color--light-gray ui-font-size--14"
+                      *ngIf="notification.invitation">Invited you to sign:</span>
+                <span class="ui-color--light-gray ui-font-size--14"
+                      *ngIf="!notification.invitation">REJECTED</span>
+                <span class="ui-color--light-gray ui-font-size--12 float-right ui-line-height--27">{{ notification.inviteDate | date:'HH:mm , d.MMM.y'}}</span>
+                <p class="clear"></p>
+                <label class="ui-cursor--pointer ui-color--light-blue ui-font-size--14">{{ notification.documentName }}</label>
+            </div>
+        </div>
+    </div>
+</span>

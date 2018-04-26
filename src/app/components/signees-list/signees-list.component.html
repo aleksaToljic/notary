@@ -2,7 +2,7 @@
     Signees
 </div>
 <!--should go *ngFor from signees list-->
-<div class="row m-0 mb-3 pb-1 ui-separator--bottom-gray" >
+<div class="row m-0 mb-3 pb-1 ui-separator--bottom-gray" *ngFor="let event of sessionService.currentEvents" >
     <div class="col-1 p-0">
         <span class="ui-icon--signees float-right m-2" inlineSVG="../../assets/icon-signees.svg"></span>
     </div>
@@ -14,15 +14,15 @@
         <!--<span class="float-right ui-color&#45;&#45;lightgray ui-font-size&#45;&#45;12"></span>-->
     </div>
 </div>
-<div class="row m-0 mb-3 pb-1 ui-separator--bottom-gray" >
-    <div class="col-1 p-0">
-        <span class="ui-icon--signees float-right m-2" inlineSVG="../../assets/icon-signees.svg"></span>
-    </div>
-    <div class="col-11 p-0">
-        <span class="ui-font-size--14 ui-color--black-semilight">Firstname Lastname</span>
-        <span class="float-right ui-font-weight--bold ui-font-size--12 ui-color--green">SIGNED</span>
-        <p class="clear"></p>
-        <label class="ui-text-decoration--underline ui-cursor--pointer ui-color--light-gray ui-font-size--12">view signature</label>
-        <span class="float-right ui-color--light-gray ui-font-size--12">21.Jul.2018</span>
-    </div>
-</div>
+<!--<div class="row m-0 mb-3 pb-1 ui-separator&#45;&#45;bottom-gray" >-->
+    <!--<div class="col-1 p-0">-->
+        <!--<span class="ui-icon&#45;&#45;signees float-right m-2" inlineSVG="../../assets/icon-signees.svg"></span>-->
+    <!--</div>-->
+    <!--<div class="col-11 p-0">-->
+        <!--<span class="ui-font-size&#45;&#45;14 ui-color&#45;&#45;black-semilight">Firstname Lastname</span>-->
+        <!--<span class="float-right ui-font-weight&#45;&#45;bold ui-font-size&#45;&#45;12 ui-color&#45;&#45;green">SIGNED</span>-->
+        <!--<p class="clear"></p>-->
+        <!--<label class="ui-text-decoration&#45;&#45;underline ui-cursor&#45;&#45;pointer ui-color&#45;&#45;light-gray ui-font-size&#45;&#45;12">view signature</label>-->
+        <!--<span class="float-right ui-color&#45;&#45;light-gray ui-font-size&#45;&#45;12">21.Jul.2018</span>-->
+    <!--</div>-->
+<!--</div>-->

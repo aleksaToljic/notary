@@ -10,6 +10,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
 
+    blocked = false;
+
     constructor(private config: ConfigService, private sessionService: SessionService, private http: HttpClient) {
     }
 
@@ -25,5 +27,10 @@ export class AppComponent implements OnInit {
                 // this.privateKey = res.privateKey;
             }
         );
+        setTimeout(() => {
+            if (this.sessionService.loggedin) {
+                this.blocked = true;
+            }
+        }, 5000);
     }
 }

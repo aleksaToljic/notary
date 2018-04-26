@@ -87,7 +87,7 @@ export class PreviewComponent implements OnInit {
                 responseType: 'text'
             }).subscribe(res => {
                 if (res === 'true') {
-                    this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, (err) => {
+                        this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, (err) => {
                         if (err) {
                             console.log(err);
                         } else {
@@ -129,7 +129,7 @@ export class PreviewComponent implements OnInit {
     onMultipleInvite(form: NgForm) {
         const value = form.value;
 
-        let users = value.users.split(',');
+        const users = value.users.split(',');
         let valid = true;
 
         for (let i = 0; i < users.length; i++) {
@@ -139,25 +139,27 @@ export class PreviewComponent implements OnInit {
                 }, {
                     withCredentials: true,
                     responseType: 'text'
-                }).subscribe(res => {
-                    if (res === 'false') {
-                        valid = false;
-                        alert('Email ' + users[i] + ' does not exist.');
-                        // break;
+                }).toPromise().then(
+                    res => {
+                        if (res === 'false') {
+                            // valid = false;
+                            // alert('Email ' + users[i] + ' does not exist.');
+                            // break;
+                        }
+                    }, err => {
+                        console.log(err);
                     }
-                }, err => {
-                    console.log(err);
-                });
+                );
             } else {
                 this.http.post(this.config.server_url + 'usernameExists', {
                     username: value.user
                 }, {
                     withCredentials: true,
                     responseType: 'text'
-                }).subscribe(res => {
+                }).toPromise().then(res => {
                     if (res === 'false') {
-                        valid = false;
-                        alert('Username ' + users[i] + ' does not exist.');
+                        // valid = false;
+                        // alert('Username ' + users[i] + ' does not exist.');
                         // break;
                     }
                 }, err => {

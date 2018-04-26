@@ -5,10 +5,15 @@
 @include create_base_class_px(font-size, 18);
 @include create_base_class_px(font-size, 36);
 
+@include create_base_class_px(width, 15);
 @include create_base_class_px(width, 16);
+@include create_base_class_px(width, 30);
 @include create_base_class_px(width, 100);
 @include create_base_class_px(width, 106);
 @include create_base_class_px(width, 190);
+
+
+@include create_base_class_px(margin-top, 10);
 
 @include create_base_class_px(height, 16);
 
@@ -36,6 +41,7 @@
 @include create_base_class(display, table-cell);
 
 @include create_base_class(line-height, 0);
+@include create_base_class_px(line-height, 27);
 
 @include create_base_class(vertical-align, middle);
 @include create_base_class(text-decoration, underline);

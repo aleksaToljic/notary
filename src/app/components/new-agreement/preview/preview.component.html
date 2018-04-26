@@ -19,7 +19,9 @@
     <option value="2">You & Second Party</option>
     <option value="3">Multiple Parties</option>
 </select>
-<form (ngSubmit)="onInvite(f)" #f="ngForm">
+<form (ngSubmit)="onInvite(f)" class="text-center" #f="ngForm">
+
+
     <!--<app-document></app-document>-->
     <div *ngIf="meAndSecond">
 
@@ -28,7 +30,7 @@
 
     </div>
 
-    <div class="text-center my-5">
+    <div class="text-center my-5" *ngIf="showNext && meAndSecond">
         <button type="submit" *ngIf="showNext && meAndSecond"
                 class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
             Next
@@ -36,7 +38,7 @@
         <!--<label class="ui-color&#45;&#45;light-gray ui-font-size&#45;&#45;14 ml-3">Skip</label>-->
     </div>
 </form>
-<form (ngSubmit)="onMultipleInvite(f2)" #f2="ngForm">
+<form (ngSubmit)="onMultipleInvite(f2)" class="text-center" #f2="ngForm">
     <div *ngIf="multiple">
         <input class="form-control mt-2" name="users" required ngModel
                placeholder="example@email.com,username123,...">
@@ -44,7 +46,13 @@
 
     </div>
     <button type="submit" *ngIf="showNext && multiple"
-            class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
+            class=" w-50 mt-5 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
         Next
     </button>
 </form>
+<div class="text-center mt-5">
+    <button *ngIf="showNext && !meAndSecond && !multiple" routerLink="3"
+            class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
+        Next
+    </button>
+</div>
