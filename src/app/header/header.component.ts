@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ConfigService} from '../config/config.service';
 import {Http} from '@angular/http';
 import {Router} from '@angular/router';
-import {SessionService} from "../shared/session.service";
+import {SessionService} from '../shared/session.service';
 
 @Component({
     selector: 'app-header',
@@ -24,15 +24,20 @@ export class HeaderComponent implements OnInit {
                 // this.router.navigateByUrl('/login');
                 // trnutno console.log(this.router.url)
             } else {
+                this.sessionService.loggedin = true;
                 this.sessionService.username = data['username'];
+
                 this.sessionService.address = data['address'];
+
+                console.log(111, this.sessionService.address);
+                this.sessionService.addressReceived.next(true);
                 this.sessionService.privateKey = data['private'];
                 // this.sendSession.emit({
                 //   username: data['username'],
                 //   address: data['address'],
                 //   privateKey: data['private']
                 // });
-                this.sessionService.loggedin = true;
+
                 // this.username = data['username'];
             }
         });
@@ -42,7 +47,6 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
     }
-
 
 
 }

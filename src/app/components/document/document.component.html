@@ -1,13 +1,15 @@
-
 <div class="position-relative">
     <file-drop (onFileDrop)="dropped($event)"
                (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
         <!--<span>optional content (don't set headertext then)</span>-->
-        <div class="text-center">
+        <div *ngIf="!sessionService.documentUploaded" class="text-center">
             <span class="ui-font-size--18 d-block  ui-color--light-gray ui-font-weight--black">Choose or Drag & Drop</span>
             <p class="clear"></p>
             <span class="ui-font-size--18 d-block ui-color--light-gray ui-font-weight--light">(PDF file)</span>
         </div>
+        <span  class="ui-icon-checked"
+              *ngIf="sessionService.documentUploaded"
+              inlineSVG="../../../assets/icon-checked.svg"></span>
         <input class="ui-file-drop--input"
                type="file" (change)="changeListener($event)"/>
     </file-drop>

@@ -30,6 +30,7 @@
     "ng-inline-svg": "^6.1.0",
     "ng2-pdf-viewer": "^4.1.2",
     "ngx-file-drop": "^3.0.0",
+    "ngx-progressbar": "^2.1.1",
     "node-sass": "^4.8.3",
     "pdfjs-dist": "^2.0.489",
     "rxjs": "^5.5.2",

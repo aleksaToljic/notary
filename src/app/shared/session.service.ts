@@ -10,11 +10,14 @@ export class SessionService {
     public username: string;
     public address: string;
     public privateKey: string;
-    public loggedin = false;
+    public loggedin: boolean;
+    public documentAwait = false;
     public currentDocument: DocumentProperties = {name: '', size: 0, hash: '', type: '', content: ''};
     public documentUploaded = false;
     documentUploadedSubject = new Subject();
     public currentEvents = [];
+
+    addressReceived = new Subject();
 
     // public fileDraggedOver = false;
 
@@ -49,6 +52,7 @@ export class SessionService {
                 res => {
                     console.log(res);
                     this.router.navigate(['login']);
+                    this.loggedin = false;
                 },
                 err => {
                     console.log('Error occured');

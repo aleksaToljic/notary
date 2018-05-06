@@ -8,6 +8,7 @@
 @include create_base_class_px(width, 15);
 @include create_base_class_px(width, 16);
 @include create_base_class_px(width, 30);
+@include create_base_class_px(width, 70);
 @include create_base_class_px(width, 100);
 @include create_base_class_px(width, 106);
 @include create_base_class_px(width, 190);
@@ -19,12 +20,16 @@
 
 @include create_base_class_px(max-width, 330);
 
+@include create_base_class_px(min-width, 320);
+
 //border radius classes .ui-border-radius--11
 @include create_base_class_px(border-radius, 11);
 
 //color classes .ui-color--dark-red
 @include create_base_class(color, $darkred_color, dark-red);
 @include create_base_class(color, $lightblue_color, light-blue);
+@include create_base_class(color, $dark_blue_color, dark-blue);
+
 //used for gray links
 @include create_base_class(color, $darkgray_color, dark-gray);
 @include create_base_class(color, $white, white);
@@ -45,6 +50,7 @@
 
 @include create_base_class(vertical-align, middle);
 @include create_base_class(text-decoration, underline);
+@include create_base_class(word-break, break-all);
 @include create_base_class(cursor, pointer);
 @include create_base_class(font-weight, 300, light);
 @include create_base_class(font-weight, 600, bold);

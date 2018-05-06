@@ -4,16 +4,26 @@
             <div class="ui-display--table ui-height--full-browser-56 w-100">
                 <div class=" ui-display--table-row">
                     <div class="ui-display--table-cell align-middle">
-                        <div class="ui-panel--storage" >
-                            <div class="ui-separator--bottom-gray p-3 mx-3 d-table w-100" *ngFor="let file of files;">
-                                <span class="d-inline-block ui-width--30">
-                                    <span *ngIf="getTypeIcon(file.fileType) != ''"
-                                          [inlineSVG]="getTypeIcon(file.fileType)"></span>
-                                </span>
-                                <span class="ui-cursor--pointer ui-color--light-blue ui-outline--none"
-                                      (click)="openFile(file.name)">{{ file.name.substr(1,file.name.length) }}</span>
-                                <span class="float-right">{{ file.size }} MB</span>
-
+                        <div class="ui-panel--storage">
+                            <div class="ui-separator--bottom-gray p-3 ui-font-weight--bold ui-color--black-semilight">
+                                Shared Documents
+                            </div>
+                            <div class="px-3" *ngFor="let file of files;">
+                                <div class="ui-separator--bottom-gray p-3 d-table w-100">
+                                    <div class="d-table-row">
+                                        <div class="d-table-cell align-middle">
+                                            <span class="d-inline-block align-middle ui-width--30">
+                                                <span *ngIf="getTypeIcon(file.fileType) != ''"
+                                                   [inlineSVG]="getTypeIcon(file.fileType)"></span>
+                                            </span>
+                                            <span class="ui-cursor--pointer align-middle ui-color--light-blue ui-outline--none"
+                                                  (click)="openFile(file.name)">{{ file.name.substr(1,file.name.length) }}</span>
+                                        </div>
+                                        <div class="d-table-cell ui-width--70 text-right align-middle">
+                                            <span class="align-middle">{{ file.size }} MB</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -22,5 +32,77 @@
         </div>
     </div>
 </div>
+
+<!--<div class="container">-->
+<!--<div class="row">-->
+<!--<div class="col-12">-->
+<!--<div class="ui-display&#45;&#45;table ui-height&#45;&#45;full-browser-56 w-100">-->
+<!--<div class=" ui-display&#45;&#45;table-row">-->
+<!--<div class="ui-display&#45;&#45;table-cell align-middle">-->
+<!--<div class="ui-panel&#45;&#45;storage">-->
+<!--<div class="ui-separator&#45;&#45;bottom-gray p-3 ui-font-weight&#45;&#45;bold ui-color&#45;&#45;black-semilight">-->
+<!--Shared Documents-->
+<!--</div>-->
+<!--<div class="px-3" *ngFor="let file of files;">-->
+<!--<div class="ui-separator&#45;&#45;bottom-gray p-3 d-table w-100">-->
+<!--<div class="d-table-row">-->
+<!--<div class="d-table-cell align-middle">-->
+<!--<span class="d-inline-block align-middle ui-width&#45;&#45;30">-->
+<!--<span *ngIf="getTypeIcon(file.fileType) != ''"-->
+<!--[inlineSVG]="getTypeIcon(file.fileType)"></span>-->
+<!--</span>-->
+<!--<span class="ui-cursor&#45;&#45;pointer align-middle ui-color&#45;&#45;light-blue ui-outline&#45;&#45;none" (click)="openFile(file.name)">{{ file.name.substr(1,file.name.length) }}</span>-->
+
+
+<!--</div>-->
+<!--<div class="d-table-cell ui-width&#45;&#45;70 text-right align-middle">-->
+<!--<span class="align-middle">{{ file.size }} MB</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="px-3">-->
+<!--<div class="ui-separator&#45;&#45;bottom-gray p-3 d-table w-100">-->
+<!--<div class="d-table-row">-->
+<!--<div class="d-table-cell align-middle">-->
+<!--<span class="d-inline-block align-middle ui-width&#45;&#45;30">-->
+<!--<span inlineSVG="../../../assets/icon-pdf.svg"></span>-->
+<!--</span>-->
+<!--<span class="ui-cursor&#45;&#45;pointer align-middle ui-color&#45;&#45;light-blue ui-outline&#45;&#45;none"> Some document</span>-->
+
+
+<!--</div>-->
+<!--<div class="d-table-cell ui-width&#45;&#45;70 text-right align-middle">-->
+<!--<span class="align-middle">1 MB</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="px-3">-->
+<!--<div class="ui-separator&#45;&#45;bottom-gray p-3 d-table w-100">-->
+<!--<div class="d-table-row">-->
+<!--<div class="d-table-cell align-middle">-->
+<!--<span class="d-inline-block align-middle ui-width&#45;&#45;30">-->
+<!--<span inlineSVG="../../../assets/icon-pdf.svg"></span>-->
+<!--</span>-->
+<!--<span class="ui-cursor&#45;&#45;pointer align-middle ui-color&#45;&#45;light-blue ui-outline&#45;&#45;none"> Some document</span>-->
+
+
+<!--</div>-->
+<!--<div class="d-table-cell ui-width&#45;&#45;70 text-right align-middle">-->
+<!--<span class="align-middle">1 MB</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
 
 

@@ -4,6 +4,7 @@ import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../../config/config.service';
 import {Router} from '@angular/router';
+import * as Accounts from '../../../web3-eth-accounts/src/index';
 
 @Component({
     selector: 'app-preview',
@@ -13,14 +14,73 @@ import {Router} from '@angular/router';
 export class PreviewComponent implements OnInit {
 
     @ViewChild('f') slForm: NgForm;
+    @ViewChild('f2') s2Form: NgForm;
     showNext: boolean;
     meAndSecond: boolean;
     multiple: boolean;
+    signedMeAndSecond: boolean;
+    web3accounts: any = Accounts;
+    signed: boolean;
+    transactionB: boolean;
+    transactionHash: string;
+    await: boolean;
+    multipleInviteSignDialog: boolean;
+    multipleTxHashes: any[] = [];
+
+    receiver: any;
 
     constructor(private sessionService: SessionService, private http: HttpClient, private config: ConfigService, private router: Router) {
+        // this.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io'));
     }
 
-    uploadAndShareFile(path, content, user, cb) {
+    submitedMeAndSecond() {
+        this.signedMeAndSecond = true;
+    }
+
+    createSignature() {
+        try {
+            const privateKey = this.web3accounts.decrypt(JSON.parse(this.sessionService.privateKey), this.slForm.form.value.password);
+            this.showNext = false;
+
+            this.http.post(this.config.server_url + 'getUserInfoByEmail', {
+                email: this.receiver
+            }, {
+                responseType: 'text',
+                withCredentials: true
+            }).subscribe(
+                res => {
+                    const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                    console.log(signature);
+                    this.await = true;
+                    this.signed = true;
+                    this.onInvite(this.slForm, signature);
+                }, err => {
+                    this.http.post(this.config.server_url + 'getUserInfoByUsername', {
+                        username: this.receiver
+                    }, {
+                        responseType: 'text',
+                        withCredentials: true
+                    }).subscribe(
+                        res => {
+                            const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                            console.log(signature);
+                            this.await = true;
+                            this.signed = true;
+                            this.onInvite(this.slForm, signature);
+                        }, error => {
+                            console.log(error);
+                        }
+                    );
+                }
+            );
+        } catch {
+            alert('Wrong Password!');
+        }
+
+
+    }
+
+    uploadAndShareFile(path, content, user, signature, cb) {
         this.http.post(this.config.server_url + 'putFile', {
             path: path,
             content: content
@@ -29,7 +89,7 @@ export class PreviewComponent implements OnInit {
             responseType: 'text'
         }).subscribe(res => {
             if (res === 'true') {
-                this.sendRequest(path, user, (err) => {
+                this.sendRequest(path, user, signature, (err) => {
                     cb(err);
                 });
             } else {
@@ -58,25 +118,65 @@ export class PreviewComponent implements OnInit {
         });
     }
 
-    sendRequest(path, user, cb) {
-        this.http.post(this.config.server_url + 'sendRequest', {
-            path: path,
-            user: user
-        }, {
-            withCredentials: true,
-            responseType: 'text'
-        }).subscribe(res => {
-            if (res === 'ok') {
-                cb(false);
-            } else {
-                cb('Unknown error');
-            }
-        }, err => {
-            cb(err);
-        });
+    sendRequest(path, user, signature, cb) {
+        if (user.indexOf('@') > -1) {
+            this.http.post(this.config.server_url + 'sendRequest', {
+                path: path,
+                email: user,
+                documentHash: this.sessionService.currentDocument.hash,
+                signature: signature
+            }, {
+                withCredentials: true,
+                responseType: 'text'
+            }).subscribe(res => {
+                if (res) {
+                    cb(false);
+                    if (this.multiple) {
+                        this.multipleTxHashes.push(JSON.parse(res).transactionHash);
+                        console.log(this.multipleTxHashes);
+                    } else {
+                        this.transactionHash = JSON.parse(res).transactionHash;
+                        console.log(this.transactionHash);
+                    }
+
+                    this.transactionB = true;
+                } else {
+                    cb('Unknown error');
+                }
+            }, err => {
+                cb(err);
+            });
+        } else {
+            this.http.post(this.config.server_url + 'sendRequest', {
+                path: path,
+                user: user,
+                documentHash: this.sessionService.currentDocument.hash,
+                signature: signature
+            }, {
+                withCredentials: true,
+                responseType: 'text'
+            }).subscribe(res => {
+                if (res) {
+                    cb(false);
+                    if (this.multiple) {
+                        this.multipleTxHashes.push(JSON.parse(res).transactionHash);
+                        console.log(this.multipleTxHashes);
+                    } else {
+                        this.transactionHash = JSON.parse(res).transactionHash;
+                        console.log(this.transactionHash);
+                    }
+
+                    this.transactionB = true;
+                } else {
+                    cb('Unknown error');
+                }
+            }, err => {
+                cb(err);
+            });
+        }
     }
 
-    onInvite(form: NgForm) {
+    onInvite(form: NgForm, signature) {
         const value = form.value;
 
         if (value.user.indexOf('@') > -1) {
@@ -87,11 +187,12 @@ export class PreviewComponent implements OnInit {
                 responseType: 'text'
             }).subscribe(res => {
                 if (res === 'true') {
-                        this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, (err) => {
+                    this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, signature,(err) => {
                         if (err) {
                             console.log(err);
                         } else {
-                            // radi dalje
+                            this.await = false;
+                            this.showNext = true;
                             console.log('document shared');
                         }
                     });
@@ -109,12 +210,13 @@ export class PreviewComponent implements OnInit {
                 responseType: 'text'
             }).subscribe(res => {
                 if (res === 'true') {
-                    this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, (err) => {
+                    this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, signature, (err) => {
                         if (err) {
                             console.log(err);
                         } else {
+                            this.await = false;
+                            this.showNext = true;
                             console.log('document shared');
-
                         }
                     });
                 } else {
@@ -126,11 +228,16 @@ export class PreviewComponent implements OnInit {
         }
     }
 
-    onMultipleInvite(form: NgForm) {
-        const value = form.value;
+    submitedMultipleInvite() {
+        this.checkUsers();
+    }
 
-        const users = value.users.split(',');
+    checkUsers() {
         let valid = true;
+
+        const value = this.s2Form.form.value;
+
+        const users = value.users.split(',')
 
         for (let i = 0; i < users.length; i++) {
             if (users[i].indexOf('@') > -1) {
@@ -169,22 +276,77 @@ export class PreviewComponent implements OnInit {
         }
 
         if (valid) {
-            this.uploadFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, (err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    for (let i = 0; i < users.length; i++) {
-                        this.sendRequest(this.sessionService.currentDocument.name, users[i], (error) => {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                console.log('document sucessfully shared ' + users[i]);
-                            }
-                        });
-                    }
-                }
-            });
+            this.multipleInviteSignDialog = true;
         }
+    }
+
+    createMultipleSignature() {
+        const value = this.s2Form.form.value;
+        const users = value.users.split(',');
+
+        this.uploadFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, (err) => {
+           if (err) {
+               console.log(err);
+           } else {
+               console.log('document uploaded');
+
+               try {
+                   const privateKey = this.web3accounts.decrypt(JSON.parse(this.sessionService.privateKey), this.s2Form.form.value.password);
+                   this.await = true;
+
+                   for (let user = 0; user < users.length; user++) {
+                       this.http.post(this.config.server_url + 'getUserInfoByEmail', {
+                           email: users[user]
+                       }, {
+                           responseType: 'text',
+                           withCredentials: true
+                       }).subscribe(
+                           res => {
+                               const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                               console.log(signature);
+                               this.multipleInviteSignDialog = false;
+
+                               this.sendRequest(this.sessionService.currentDocument.name, users[user], signature,(err2) => {
+                                   if (err2) {
+                                       console.log(err2);
+                                   } else {
+                                       console.log('document shared');
+                                   }
+                               });
+                           }, err3 => {
+                               this.http.post(this.config.server_url + 'getUserInfoByUsername', {
+                                   username: users[user]
+                               }, {
+                                   responseType: 'text',
+                                   withCredentials: true
+                               }).subscribe(
+                                   res => {
+                                       const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                                       console.log(signature);
+                                       this.multipleInviteSignDialog = false;
+
+                                       this.sendRequest(this.sessionService.currentDocument.name, users[user], signature, (err4) => {
+                                           if (err4) {
+                                               console.log(err4);
+                                           } else {
+                                               console.log('document shared');
+                                           }
+                                       });
+                                   }, error => {
+                                       console.log(error);
+                                   }
+                               );
+                           }
+                       );
+
+                       this.await = false;
+                       this.showNext = true;
+                   }
+               } catch {
+                   alert('Wrong password.');
+               }
+           }
+        });
     }
 
     onSelect(value: any) {
@@ -202,7 +364,7 @@ export class PreviewComponent implements OnInit {
                 break;
 
             case '3':
-                this.showNext = true;
+                this.showNext = false;
                 this.meAndSecond = false;
                 this.multiple = true;
                 break;

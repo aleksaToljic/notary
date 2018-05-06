@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.sessionService.logout();
+
         this.signupForm = new FormGroup({
             'userData': new FormGroup({
                 'username': new FormControl(null, Validators.required),

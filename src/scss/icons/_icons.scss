@@ -2,6 +2,7 @@
   display: inline-block;
   width: 18px;
 }
+
 .ui-icon--key-normalize {
   position: relative;
   top: -3px;
@@ -10,4 +11,19 @@
 .ui-icon--signees {
   display: inline-block;
   width: 15px;
+}
+
+.ui-icon--refresh {
+  path:first-child {
+    fill: #2ac4ed;
+  }
+  path:last-child {
+    fill: #70c282;
+  }
+}
+
+.ui-icon--refresh {
+  &.ui-state-active svg{
+    @include vendor(animation, progress-spinner 1s linear infinite);
+  }
 }

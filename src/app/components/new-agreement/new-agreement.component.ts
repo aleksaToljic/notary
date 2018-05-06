@@ -15,6 +15,7 @@ export class NewAgreementComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.sessionService.currentDocument = {name: '', size: 0, hash: '', type: '', content: ''};
         this.subscription = this.sessionService.documentUploadedSubject.subscribe(
             (uploaded: boolean) => {
                 if (uploaded) {

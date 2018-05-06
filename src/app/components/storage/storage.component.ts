@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../config/config.service';
 import {SessionService} from '../../shared/session.service';
 import {Router} from '@angular/router';
+import {NgProgress} from 'ngx-progressbar';
 
 @Component({
     selector: 'app-storage',
@@ -13,7 +14,7 @@ export class StorageComponent implements OnInit {
 
     files: File[] = [];
 
-    constructor(private http: HttpClient, private config: ConfigService, private sessionService: SessionService, private router: Router) {
+    constructor(private http: HttpClient, private config: ConfigService, private sessionService: SessionService, private router: Router, private ngProgress: NgProgress) {
     }
 
     getFile(path, cb) {
@@ -42,6 +43,7 @@ export class StorageComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.ngProgress.start();
         this.http.get(this.config.server_url + 'filelist', {
             responseType: 'text',
             withCredentials: true
@@ -67,14 +69,18 @@ export class StorageComponent implements OnInit {
             }
 
             console.log(this.files);
-        }, err => console.log(err));
+            this.ngProgress.done();
+        }, err => {
+            console.log(err);
+            this.ngProgress.done();
+        });
     }
 
     getTypeIcon(extension) {
         if (extension == 'pdf') {
             return '../../../assets/icon-pdf.svg';
         } else {
-            return 'aa';
+            return '';
         }
     }
 }

@@ -1,10 +1,11 @@
 export class ConfigService {
 
-    server_host = '192.168.88.75';
-    server_port = '3000';
-    server: string = this.server_host + ':' + this.server_port + '/';
-    ssl = false;
+    private server_host = '159.65.113.106';
+    private server_port = '3000';
+    private server: string = this.server_host + ':' + this.server_port + '/';
+    private ssl = false;
     server_url: string;
+
 
     notary_contract_address = '0x45945eab8793eb1668b124531b08e8cd9db92cb3';
     notary_contract_abi: any = [
@@ -173,7 +174,7 @@ export class ConfigService {
     network_name: string = 'kovan';
 
     constructor() {
-        if (this.ssl == false) {
+        if (this.ssl === false) {
             this.server_url = 'http://' + this.server;
         } else {
             this.server_url = 'https://' + this.server;

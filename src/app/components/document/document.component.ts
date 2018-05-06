@@ -27,12 +27,12 @@ export class DocumentComponent implements OnInit {
         // this.uploadMode = false;
         this.file = event.files[0];
         this.sessionService.documentUploadedSubject.next(true);
-        console.log(this.file);
+        // console.log(this.file);
         if (this.file.fileEntry.isFile) {
             const fileEntry = this.file.fileEntry as FileSystemFileEntry;
             fileEntry.file((file: File) => {
                 // Here you can access the real file
-                console.log(this.file.relativePath, file);
+                // console.log(this.file.relativePath, file);
 
                 this.readFile(file);
                 // this.sessionService.documentUploaded = true;
@@ -41,17 +41,17 @@ export class DocumentComponent implements OnInit {
             });
         } else {
             const fileEntry = this.file.fileEntry as FileSystemDirectoryEntry;
-            console.log(this.file.relativePath, fileEntry);
+            // console.log(this.file.relativePath, fileEntry);
         }
     }
 
     public fileOver(event) {
-        console.log(event);
+        // console.log(event);
         // this.sessionService.fileDraggedOver = true;
     }
 
     public fileLeave(event) {
-        console.log(event);
+        // console.log(event);
         // this.sessionService.fileDraggedOver = false;
     }
 
@@ -64,6 +64,7 @@ export class DocumentComponent implements OnInit {
     }
 
     readFile(file: File) {
+        this.sessionService.documentAwait = true;
         const myReader: FileReader = new FileReader();
         myReader.readAsDataURL(file);
         // this.uploadMode = false;
@@ -80,6 +81,7 @@ export class DocumentComponent implements OnInit {
             this.sessionService.currentDocument.type = fileObject.type;
             this.sessionService.currentDocument.content = fileContent;
             this.sessionService.documentUploadedSubject.next(true);
+            this.sessionService.documentAwait = false;
             // this.sessionService.documentUploaded = true;
             // this.onDrop.emit({
             //     name: fileObject.name,
@@ -91,14 +93,14 @@ export class DocumentComponent implements OnInit {
         };
 
         myReader.onloadend = function (e) {
-            console.log(e);
+            // console.log(e);
             // console.log(window.document.getElementById('viewer'));
             // window.document.getElementById('viewer').setAttribute('src', myReader.result);
             loaded(file, myReader.result);
-            console.log('file');
-            console.log(file);
-            console.log('my reader ');
-            console.log(myReader);
+            // console.log('file');
+            // console.log(file);
+            // console.log('my reader ');
+            // console.log(myReader);
 
         };
     }

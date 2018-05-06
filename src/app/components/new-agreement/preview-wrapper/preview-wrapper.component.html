@@ -42,7 +42,7 @@
 
                                 <pdf-viewer style="width: 100%;max-width: 730px" class="d-block ui-max-width--full-360"
                                             [original-size]="false" [fit-to-page]="true"
-                                            [autoresize]="true"
+                                            [autoresize]="true" (after-load-complete)="callBackFn($event)"
                                             [src]="sessionService.currentDocument.content"></pdf-viewer>
                                 <!--<ngx-imageviewer src="https://www.tutorialspoint.com/java/java_tutorial.pdf"></ngx-imageviewer>-->
                             </div>

@@ -59,6 +59,7 @@ import {NotificationComponent} from './components/notification/notification.comp
 import {NotificationService} from './components/notification/notification.service';
 import {NotificationDirective} from './components/notification/notification.directive';
 import { SignDialogComponent } from './components/sign-dialog/sign-dialog.component';
+import {NgProgressModule} from 'ngx-progressbar';
 
 
 @NgModule({
@@ -113,7 +114,8 @@ import { SignDialogComponent } from './components/sign-dialog/sign-dialog.compon
         MatSlideToggleModule,
         MatCheckboxModule,
         FileDropModule,
-        PdfViewerModule
+        PdfViewerModule,
+        NgProgressModule
     ],
     providers: [
         ConfigService, SessionService, AuthGuard, PreviewGuard, NotificationService
