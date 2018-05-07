@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
                             toBlock: 'latest'
                         }, (error2, events2) => {
                             receivedEvents = events2;
-                            console.log(receivedEvents, receivedEvents.length)
+                            console.log(receivedEvents, receivedEvents.length);
 
                             // ako se prima isti dokument od razlicith ljudi????
                             // i potpis za receive mora da bude validan
@@ -131,6 +131,8 @@ export class DashboardComponent implements OnInit {
                         console.log(56565, res);
                         if (JSON.parse(res).data === true) {
                             this.blocked = true;
+                        } else {
+                            this.blocked = false;
                         }
                     }, err => {
                         console.log(err);

@@ -29,7 +29,7 @@ export class PreviewStep3Component implements OnInit {
 
     // events: any[];
 
-    constructor(private sessionService: SessionService, private http: HttpClient, private config: ConfigService, private ngprogress: NgProgress) {
+    constructor(public sessionService: SessionService, private http: HttpClient, private config: ConfigService, private ngprogress: NgProgress) {
     }
 
 

@@ -10,7 +10,7 @@ import {NgProgress} from 'ngx-progressbar';
 })
 export class PreviewWrapperComponent implements OnInit {
 
-    constructor(private sessionService: SessionService, private ngProgress: NgProgress) {
+    constructor(public sessionService: SessionService, private ngProgress: NgProgress) {
     }
 
     ngOnInit() {

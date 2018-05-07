@@ -17,6 +17,9 @@ export class PreviewGuard implements CanActivate, CanActivateChild {
         return this.sessionService.isUploaded().then(
             (authenticated: boolean) => {
                 if (authenticated) {
+
+                    return true;
+                } else if (this.sessionService.currentDocument.content !== '') {
                     return true;
                 } else {
                     this.router.navigate(['/notary/new-agreement']);

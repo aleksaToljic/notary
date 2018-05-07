@@ -5,9 +5,9 @@
 </div>
 <!--animate refresh button-->
 <!--should go *ngFor from signees list-->
-<div class="row m-0 mb-3 pb-1 ui-separator--bottom-gray"
+<div
      *ngFor="let event of sessionService.currentEvents; let i = index;">
-    <div *ngIf="event.valid">
+    <div class="row m-0 mb-3 pb-1 ui-separator--bottom-gray" *ngIf="event.valid">
         <div class="col-1 p-0">
             <span class="ui-icon--signees float-right m-2" inlineSVG="../../assets/icon-signees.svg"></span>
         </div>

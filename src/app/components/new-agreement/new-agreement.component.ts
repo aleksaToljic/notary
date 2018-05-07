@@ -11,11 +11,12 @@ import {Subscription} from 'rxjs/Subscription';
 export class NewAgreementComponent implements OnInit, OnDestroy {
     subscription = new Subscription();
 
-    constructor(private sessionService: SessionService) {
+    constructor(public sessionService: SessionService) {
     }
 
     ngOnInit() {
         this.sessionService.currentDocument = {name: '', size: 0, hash: '', type: '', content: ''};
+        this.sessionService.documentUploaded = false;
         this.subscription = this.sessionService.documentUploadedSubject.subscribe(
             (uploaded: boolean) => {
                 if (uploaded) {

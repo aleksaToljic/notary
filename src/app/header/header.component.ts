@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
     // username: string;
 
-    constructor(private config: ConfigService, private http: Http, private router: Router, private sessionService: SessionService) {
+    constructor(private config: ConfigService, private http: Http, private router: Router, public sessionService: SessionService) {
         this.http.get(this.config.server_url + 'session', {
             withCredentials: true
         }).map(res => res.json()).subscribe((data) => {

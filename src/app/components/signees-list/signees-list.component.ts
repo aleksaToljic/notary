@@ -17,7 +17,7 @@ export class SigneesListComponent implements OnInit {
 
     refreshing = false;
 
-    constructor(private sessionService: SessionService, private config: ConfigService, private http: HttpClient) {
+    constructor(public sessionService: SessionService, private config: ConfigService, private http: HttpClient) {
         this.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io'));
 
 

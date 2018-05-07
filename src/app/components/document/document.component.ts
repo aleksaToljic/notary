@@ -18,7 +18,7 @@ export class DocumentComponent implements OnInit {
 
     // @Input() uploadMode = true;
 
-    constructor(private sessionService: SessionService) {
+    constructor(public sessionService: SessionService) {
         this.web3 = new Web3();
     }
 
