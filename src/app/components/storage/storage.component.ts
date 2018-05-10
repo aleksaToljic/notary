@@ -4,6 +4,7 @@ import {ConfigService} from '../../config/config.service';
 import {SessionService} from '../../shared/session.service';
 import {Router} from '@angular/router';
 import {NgProgress} from 'ngx-progressbar';
+import * as Web3 from '../../../../node_modules/web3/src';
 
 @Component({
     selector: 'app-storage',
@@ -11,11 +12,30 @@ import {NgProgress} from 'ngx-progressbar';
     styleUrls: ['./storage.component.scss']
 })
 export class StorageComponent implements OnInit {
-
+    filterString: string;
     files: File[] = [];
+    order: number;
+    column: '';
+    descending = false;
+    web3: any;
 
-    constructor(private http: HttpClient, private config: ConfigService, private sessionService: SessionService, private router: Router, private ngProgress: NgProgress) {
+    constructor(private http: HttpClient, private config: ConfigService, public sessionService: SessionService, private router: Router, private ngProgress: NgProgress) {
+        this.web3 = new Web3();
     }
+
+    sort(column) {
+        this.column = column;
+        this.descending = !this.descending;
+        this.order = this.descending ? 1 : -1;
+    }
+
+    // sortFilesBySize() {
+    //
+    //     this.files.sort((a: any, b: any) => {
+    //         return a.valueOf() - b.valueOf();
+    //     });
+    //
+    // }
 
     getFile(path, cb) {
         this.http.post(this.config.server_url + 'getFile', {
@@ -30,13 +50,17 @@ export class StorageComponent implements OnInit {
         });
     }
 
-    openFile(path) {
+    openFile(path, size, type) {
         this.getFile(path, (err, content) => {
             if (err) {
                 console.log(err);
             } else {
                 console.log(content);
+                this.sessionService.currentDocument.size = size;
+                this.sessionService.currentDocument.name = path.substr(1, path.length);
+                this.sessionService.currentDocument.type = 'application/pdf';
                 this.sessionService.currentDocument.content = content;
+                this.sessionService.currentDocument.hash = this.web3.utils.sha3(content);
                 this.router.navigate(['notary/new-agreement/preview/3']);
             }
         });
@@ -61,11 +85,14 @@ export class StorageComponent implements OnInit {
 
                 // extension.findIndex(extension.length - 1);
                 console.log(extension);
-                this.files.push({
-                    name: files[i].name,
-                    size: parseFloat((files[i].fileInfo['{DAV:}getcontentlength'] / (1024 * 1024)).toFixed(2)),
-                    fileType: extension
-                });
+                console.log(files[i].fileInfo['{DAV:}getcontentlength'] * 1);
+                if (files[i].fileInfo['{DAV:}getcontentlength'] !== undefined) {
+                    this.files.push({
+                        name: files[i].name,
+                        sizeB: files[i].fileInfo['{DAV:}getcontentlength'] * 1,
+                        fileType: extension
+                    });
+                }
             }
 
             console.log(this.files);
@@ -88,6 +115,6 @@ export class StorageComponent implements OnInit {
 
 interface File {
     name: string;
-    size: number;
+    sizeB: number;
     fileType: string;
 }

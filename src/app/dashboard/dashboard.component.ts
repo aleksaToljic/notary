@@ -15,6 +15,7 @@ import * as Accounts from '../web3-eth-accounts/src/index';
 export class DashboardComponent implements OnInit {
     subscription: Subscription;
     blocked = false;
+    closeButton = false;
     web3: any;
     notaryContract: any;
 
@@ -29,92 +30,23 @@ export class DashboardComponent implements OnInit {
     showBlockerPassword: boolean[] = [];
     showBlockerButtons: boolean[] = [];
     buttonsDisabled: boolean;
-    ignored: boolean;
 
     recievedDocuments: any[] = [];
+
+    checkInterval: any;
 
     constructor(private config: ConfigService, private sessionService: SessionService, private http: HttpClient) {
         this.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io'));
 
         this.notaryContract = new this.web3.eth.Contract(this.config.notary_contract_abi, this.config.notary_contract_address);
-        console.log(this.sessionService.address);
+        setTimeout(() => {
+            console.log(this.sessionService.address, 'kurcina1');
+        }, 3000);
         this.subscription = this.sessionService.addressReceived.subscribe(
             (uploaded: boolean) => {
+                console.log(this.sessionService.address, 'kurcina2');
                 if (uploaded) {
-                    console.log('this is sub' + uploaded);
-                    // this.sessionService.documentUploaded = true;
-                    // setTimeout(() => this.sessionService.documentUploaded = true, 4000);
-                    let sentEvents, receivedEvents = [];
-
-                    this.notaryContract.getPastEvents('Sent', {
-                        filter: {
-                            receiver: this.sessionService.address
-                        },
-                        fromBlock: this.config.contract_deployed_at_block,
-                        toBlock: 'latest'
-                    }, (error, events) => {
-                        sentEvents = events;
-
-                        this.notaryContract.getPastEvents('Received', {
-                            filter: {
-                                receiver: this.sessionService.address
-                            },
-                            fromBlock: this.config.contract_deployed_at_block,
-                            toBlock: 'latest'
-                        }, (error2, events2) => {
-                            receivedEvents = events2;
-                            console.log(receivedEvents, receivedEvents.length);
-
-                            // ako se prima isti dokument od razlicith ljudi????
-                            // i potpis za receive mora da bude validan
-
-                            for (let x = 0; x < sentEvents.length; x++) {
-                                let received = false;
-
-                                for (let y = 0; y < receivedEvents.length; y++) {
-                                    if (sentEvents[x]['returnValues']['documentHash'].toLowerCase() === receivedEvents[y]['returnValues']['documentHash'].toLowerCase()) {
-                                        received = true;
-                                    }
-                                }
-
-                                if (received === false) {
-                                    this.recievedDocuments.push(sentEvents[x]);
-                                }
-                            }
-
-                            this.getEventsInfo();
-                            this.getBlocksMinedAt();
-                            this.checkEventsValidity();
-                            this.getFilenames();
-                            console.log(2, error, events);
-
-                            for (let x = 0; x < events.length; x++) {
-                                this.showBlockerPassword[x] = false;
-                                this.showBlockerButtons[x] = true;
-                            }
-                        });
-                    });
-                    /*this.notaryContract.getPastEvents('Sent', {
-                        filter: {
-                            receiver: this.sessionService.address
-                        },
-                        fromBlock: this.config.contract_deployed_at_block,
-                        toBlock: 'latest'
-                    })
-                        .then((events, error) => {
-                            this.recievedDocuments = events;
-
-                            this.getEventsInfo();
-                            this.getBlocksMinedAt();
-                            this.checkEventsValidity();
-                            this.getFilenames();
-                            console.log(2, error, events);
-
-                            for (let x = 0; x < events.length; x++) {
-                                this.showBlockerPassword[x] = false;
-                                this.showBlockerButtons[x] = true;
-                            }
-                        });*/
+                    this.refreshEvents();
                 }
             }
         );
@@ -122,26 +54,101 @@ export class DashboardComponent implements OnInit {
 
     }
 
-    ngOnInit() {
-        setInterval(() => {
-            console.log(123);
+    refreshEvents() {
+        this.recievedDocuments = [];
+
+        let sentEvents, receivedEvents = [];
+
+        this.notaryContract.getPastEvents('Sent', {
+            filter: {
+                receiver: this.sessionService.address
+            },
+            fromBlock: this.config.contract_deployed_at_block,
+            toBlock: 'latest'
+        }, (error, events) => {
+            sentEvents = events;
+
+            this.notaryContract.getPastEvents('Received', {
+                filter: {
+                    receiver: this.sessionService.address
+                },
+                fromBlock: this.config.contract_deployed_at_block,
+                toBlock: 'latest'
+            }, (error2, events2) => {
+                receivedEvents = events2;
+                console.log(receivedEvents, receivedEvents.length);
+
+                // ako se prima isti dokument od razlicith ljudi????
+                // i potpis za receive mora da bude validan
+
+                for (let x = 0; x < sentEvents.length; x++) {
+                    let received = false;
+
+                    for (let y = 0; y < receivedEvents.length; y++) {
+                        if (sentEvents[x]['returnValues']['documentHash'].toLowerCase() === receivedEvents[y]['returnValues']['documentHash'].toLowerCase()) {
+                            received = true;
+                        }
+                    }
+
+                    if (received === false) {
+                        this.recievedDocuments.push(sentEvents[x]);
+                    }
+                }
+
+                this.getEventsInfo();
+                this.getBlocksMinedAt();
+                this.checkEventsValidity();
+                this.getFilenames();
+                console.log(2, error, events);
+
+                for (let x = 0; x < events.length; x++) {
+                    this.showBlockerPassword[x] = false;
+                    this.showBlockerButtons[x] = true;
+                }
+            });
+        });
+    }
+
+    async ngOnInit() {
+        if (await this.checkBlock()) {
+            this.refreshEvents();
+            this.blocked = true;
+            this.closeButton = false;
+        } else {
+            this.checkInterval = setInterval(async () => {
+                if (await this.checkBlock()) {
+                    this.refreshEvents();
+                    this.blocked = true;
+                    this.closeButton = false;
+
+                    clearInterval(this.checkInterval);
+                }
+            }, 5000);
+        }
+
+        // setInterval(() => {
+        //     console.log(123);
+        //     if (this.blocked === false) {
+        //         this.checkedBlocked();
+        //     }
+        //
+        // }, 5000);
+    }
+
+    checkBlock() {
+        return new Promise(resolve => {
             if (this.sessionService.loggedin) {
                 this.http.get(this.config.server_url + 'isBlocked', {withCredentials: true, responseType: 'text'}).subscribe(
                     res => {
                         console.log(56565, res);
-                        if (JSON.parse(res).data === true) {
-                            this.blocked = true;
-                        } else {
-                            this.blocked = false;
-                        }
+                        resolve(JSON.parse(res).data);
                     }, err => {
                         console.log(err);
                     }
                 );
             }
-        }, 5000);
+        });
     }
-
 
     getEventsInfo() {
         for (let eventNumber = 0; eventNumber < this.recievedDocuments.length; eventNumber++) {
@@ -188,7 +195,7 @@ export class DashboardComponent implements OnInit {
                     this.recievedDocuments[eventNumber]['returnValues']['receiver'].toLowerCase() +
                     this.recievedDocuments[eventNumber]['returnValues']['documentHash'].toLowerCase(),
                     this.recievedDocuments[eventNumber]['returnValues']['signature'].toLowerCase()
-                ).toLowerCase() == this.recievedDocuments[eventNumber]['returnValues']['sender'].toLowerCase()) {
+                ).toLowerCase() === this.recievedDocuments[eventNumber]['returnValues']['sender'].toLowerCase()) {
                 this.recievedDocuments[eventNumber]['valid'] = true;
             } else {
                 this.recievedDocuments[eventNumber]['valid'] = false;
@@ -198,46 +205,42 @@ export class DashboardComponent implements OnInit {
 
 
     getFilenames() {
-        this.http.get(this.config.server_url + 'filelist', {
+        this.http.get(this.config.server_url + 'filelistWithHash', {
             responseType: 'text',
             withCredentials: true
         }).subscribe(res => {
             const files = JSON.parse(res);
+            console.log(files);
 
-            for (let y = 0; y < this.recievedDocuments.length; y++) {
-                for (let x = 0; x < files.length; x++) {
-                    this.http.post(this.config.server_url + 'getFile', {
-                        path: files[x].name
-                    }, {
-                        responseType: 'text',
-                        withCredentials: true
-                    }).subscribe(content => {
-                        const hash = this.web3.utils.sha3(content);
-
-                        //console.log(hash, this.recievedDocuments[y]['returnValues']['documentHash']);
-
-                        if (this.recievedDocuments[y]['returnValues']['documentHash'].toLowerCase() == hash.toLowerCase()) {
-                            this.recievedDocuments[y]['filename'] = files[x].name;
-                        }
-                    }, err => console.log(err));
+            for (let x = 0; x < files.length; x++) {
+                for (let y = 0; y < this.recievedDocuments.length; y++) {
+                    if (this.recievedDocuments[y]['returnValues']['documentHash'].toLowerCase() === files[x]['sha3_hash'].toLowerCase()) {
+                        console.log(222222);
+                        this.recievedDocuments[y]['filename'] = files[x]['name'];
+                    }
                 }
             }
         }, err => {
-            console.log(err);
+            console.log(err, 123123333);
 
         });
     }
 
-    receive(ignored, index) {
+
+    receive(index) {
+        clearInterval(this.checkInterval);
+
+        this.transactionHash = '';
+        this.password = '';
+
         for (let x = 0; x < this.showBlockerPassword.length; x++) {
             if (x === index) {
                 this.showBlockerPassword[index] = true;
+
             } else {
                 this.showBlockerPassword[x] = false;
             }
         }
-
-        this.ignored = ignored;
     }
 
     onBlockerSubmit(form: NgForm) {
@@ -250,16 +253,15 @@ export class DashboardComponent implements OnInit {
 
         try {
             const privateKey = this.web3accounts.decrypt(JSON.parse(this.sessionService.privateKey), this.password);
+            delete this.password;
             this.awaitingForTransaction = true;
             this.http.post(this.config.server_url + 'receive', {
                 receiver: this.sessionService.address,
                 documentHash: documentHash,
                 signature: privateKey.sign(
                     this.sessionService.address.toLowerCase() +
-                    this.ignored +
                     documentHash.toLowerCase()
-                ).signature,
-                ignored: this.ignored
+                ).signature
             }, {
                 withCredentials: true,
                 responseType: 'text'
@@ -268,6 +270,21 @@ export class DashboardComponent implements OnInit {
                 this.transactionHash = JSON.parse(res).transactionHash;
                 this.awaitingForTransaction = false;
                 this.showBlockerButtons[index] = false;
+                this.buttonsDisabled = false;
+
+                this.checkInterval = setInterval(async () => {
+                    if ((await this.checkBlock()) === false) {
+                        this.closeButton = true;
+                    } else {
+                        if (this.blocked === false) {
+                            this.refreshEvents();
+                        }
+                        this.blocked = true;
+                        this.closeButton = false;
+
+                        clearInterval(this.checkInterval);
+                    }
+                }, 5000);
             }, err => {
                 console.log(err);
             });

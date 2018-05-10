@@ -8,19 +8,36 @@
                             <div class="ui-separator--bottom-gray p-3 ui-font-weight--bold ui-color--black-semilight">
                                 Shared Documents
                             </div>
-                            <div class="px-3" *ngFor="let file of files;">
+
+                            <div class="px-3 ui-separator--bottom-gray">
+                                <input class="form-control ui-max-width--330 mt-3 ui-height--30" type="text" placeholder="Search the document"
+                                       [(ngModel)]="filterString">
+                                <div  class="d-inline-block py-3 pl-3 ui-sortable-column ui-width--full-85" (click)="sort('name')">
+                                    <span>SortName</span>
+                                </div>
+                                <div (click)="sort('sizeB')" class="ui-width--80 ui-sortable-column py-3 d-inline-block">
+                                    SortSize
+                                </div>
+                                <p class="clear"></p>
+
+
+                            </div>
+                            <div class="px-3"
+                                 *ngFor="let file of files | filter:filterString:'name' | sort: {property: column, order: order};">
+
                                 <div class="ui-separator--bottom-gray p-3 d-table w-100">
+
                                     <div class="d-table-row">
                                         <div class="d-table-cell align-middle">
-                                            <span class="d-inline-block align-middle ui-width--30">
+                                            <span class="d-inline-block align-middle ui-width--30 ui-height--30">
                                                 <span *ngIf="getTypeIcon(file.fileType) != ''"
-                                                   [inlineSVG]="getTypeIcon(file.fileType)"></span>
+                                                      [inlineSVG]="getTypeIcon(file.fileType)"></span>
                                             </span>
                                             <span class="ui-cursor--pointer align-middle ui-color--light-blue ui-outline--none"
-                                                  (click)="openFile(file.name)">{{ file.name.substr(1,file.name.length) }}</span>
+                                                  (click)="openFile(file.name, file.sizeB, file.fileType)">{{ file.name.substr(1,file.name.length) }}</span>
                                         </div>
-                                        <div class="d-table-cell ui-width--70 text-right align-middle">
-                                            <span class="align-middle">{{ file.size }} MB</span>
+                                        <div class="d-table-cell ui-width--80 text-right align-middle">
+                                            <span class="align-middle">{{ sessionService.formatBytes(file.sizeB,2) }}</span>
                                         </div>
                                     </div>
                                 </div>

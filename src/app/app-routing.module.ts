@@ -3,7 +3,6 @@ import {RegisterComponent} from './log-reg-wrapper/register/register.component';
 import {LoginComponent} from './log-reg-wrapper/login/login.component';
 import {NgModule} from '@angular/core';
 import {LogRegWrapperComponent} from './log-reg-wrapper/log-reg-wrapper.component';
-import {AuditComponent} from './components/audit/audit.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {DashboardIndexComponent} from './dashboard/dashboard-index/dashboard-index.component';
 import {AuthGuard} from './shared/auth-guard.service';
@@ -11,7 +10,6 @@ import {NewAgreementComponent} from './components/new-agreement/new-agreement.co
 import {PreviewComponent} from './components/new-agreement/preview/preview.component';
 import {PreviewGuard} from './shared/preview-guard.service';
 import {PreviewWrapperComponent} from './components/new-agreement/preview-wrapper/preview-wrapper.component';
-import {PreviewStep2Component} from './components/new-agreement/preview/preview-step-2/preview-step-2.component';
 import {PreviewStep3Component} from './components/new-agreement/preview/preview-step-3/preview-step-3.component';
 import {StorageComponent} from './components/storage/storage.component';
 
@@ -27,7 +25,6 @@ const appRoutes: Routes = [
     {
         path: 'notary', canActivate: [AuthGuard], component: DashboardComponent, children: [
             {path: '', component: DashboardIndexComponent},
-            {path: 'audit', component: AuditComponent},
             {path: 'new-agreement', component: NewAgreementComponent},
             {
                 path: 'new-agreement/preview', canActivate: [PreviewGuard], component: PreviewWrapperComponent, children: [

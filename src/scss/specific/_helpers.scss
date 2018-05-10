@@ -31,9 +31,7 @@
   cursor: default;
 }
 
-.ui-notification .active path {
-  stroke: $darkred_color;
-}
+
 
 .ui-progress-bar {
   width: 18px;
@@ -49,20 +47,8 @@
   animation: progress-spinner 400ms linear infinite;
 }
 
-.ui-icon-checked {
-  //&.ui-state-await {
-  //  path {
-  //    @include vendor(animation, check-svg 1s linear infinite reverse);
-  //  }
-  //}
-  svg {
-    padding: 1px;
-  }
-  path {
-    stroke: $icon_green;
-    stroke-dasharray: 201;
-    stroke-width: 2px;
-    @include vendor(animation, check-svg 1s linear reverse);
-    fill: $white;
-  }
+
+
+.ui-sortable-column {
+
 }

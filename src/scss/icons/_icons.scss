@@ -23,7 +23,24 @@
 }
 
 .ui-icon--refresh {
-  &.ui-state-active svg{
+  &.ui-state-active svg {
     @include vendor(animation, progress-spinner 1s linear infinite);
   }
+}
+
+.ui-icon-checked {
+  svg {
+    padding: 1px;
+  }
+  path {
+    stroke: $icon_green;
+    stroke-dasharray: 201;
+    stroke-width: 2px;
+    @include vendor(animation, check-svg 1s linear reverse);
+    fill: $white;
+  }
+}
+
+.ui-notification .active path {
+  stroke: $darkred_color;
 }

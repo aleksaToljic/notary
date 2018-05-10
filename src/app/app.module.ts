@@ -4,37 +4,13 @@ import {HttpModule} from '@angular/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatSlideToggleModule,
-    MatToolbarModule
-} from '@angular/material';
 
 import {AppComponent} from './app.component';
 import {LoginComponent} from './log-reg-wrapper/login/login.component';
 import {RegisterComponent} from './log-reg-wrapper/register/register.component';
-import {NotaryComponent} from './components/notary/notary.component';
 import {DocumentComponent} from './components/document/document.component';
-import {WalletComponent} from './components/wallet/wallet.component';
-import {
-    FilterDialog,
-    HyperlinkDialog,
-    SignaturesComponent,
-    SignDialog,
-    TxHashDialog,
-    ValidFilterPipe
-} from './components/signatures/signatures.component';
 
 import {ConfigService} from './config/config.service';
-import {AuditComponent} from './components/audit/audit.component';
 import {InlineSVGModule} from 'ng-inline-svg';
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
@@ -58,8 +34,9 @@ import {StorageComponent} from './components/storage/storage.component';
 import {NotificationComponent} from './components/notification/notification.component';
 import {NotificationService} from './components/notification/notification.service';
 import {NotificationDirective} from './components/notification/notification.directive';
-import { SignDialogComponent } from './components/sign-dialog/sign-dialog.component';
 import {NgProgressModule} from 'ngx-progressbar';
+import { FilterPipe } from './shared/filter.pipe';
+import { SortPipe } from './shared/sort.pipe';
 
 
 @NgModule({
@@ -67,17 +44,8 @@ import {NgProgressModule} from 'ngx-progressbar';
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        NotaryComponent,
         HeaderComponent,
         DocumentComponent,
-        WalletComponent,
-        SignaturesComponent,
-        SignDialog,
-        TxHashDialog,
-        FilterDialog,
-        HyperlinkDialog,
-        ValidFilterPipe,
-        AuditComponent,
         LogRegWrapperComponent,
         DashboardComponent,
         DashboardIndexComponent,
@@ -91,7 +59,8 @@ import {NgProgressModule} from 'ngx-progressbar';
         StorageComponent,
         NotificationComponent,
         NotificationDirective,
-        SignDialogComponent
+        FilterPipe,
+        SortPipe,
     ],
     imports: [
         BrowserModule,
@@ -102,29 +71,12 @@ import {NgProgressModule} from 'ngx-progressbar';
         InlineSVGModule,
         FormsModule,
         BrowserAnimationsModule,
-        MatToolbarModule,
-        MatInputModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatCardModule,
-        MatListModule,
-        MatExpansionModule,
-        MatDialogModule,
-        MatMenuModule,
-        MatSlideToggleModule,
-        MatCheckboxModule,
         FileDropModule,
         PdfViewerModule,
         NgProgressModule
     ],
     providers: [
         ConfigService, SessionService, AuthGuard, PreviewGuard, NotificationService
-    ],
-    entryComponents: [
-        SignDialog,
-        TxHashDialog,
-        FilterDialog,
-        HyperlinkDialog
     ],
     bootstrap: [AppComponent]
 })

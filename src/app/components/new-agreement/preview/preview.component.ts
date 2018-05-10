@@ -41,38 +41,48 @@ export class PreviewComponent implements OnInit {
         try {
             const privateKey = this.web3accounts.decrypt(JSON.parse(this.sessionService.privateKey), this.slForm.form.value.password);
             this.showNext = false;
+            console.log(1112, privateKey);
+            if (this.slForm.form.value.user.indexOf('@') > -1) {
+                this.http.post(this.config.server_url + 'getUserInfoByEmail', {
+                    email: this.receiver
+                }, {
+                    responseType: 'text',
+                    withCredentials: true
+                }).subscribe(
+                    res => {
+                        console.log(1113, res);
+                        const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                        console.log(1114, signature);
+                        this.await = true;
+                        this.signed = true;
+                        console.log(1115, this.slForm);
+                        this.onInvite(this.slForm, signature);
+                    }, err => {
+                        console.log(err);
+                    }
+                );
+            } else {
+                this.http.post(this.config.server_url + 'getUserInfoByUsername', {
+                    username: this.receiver
+                }, {
+                    responseType: 'text',
+                    withCredentials: true
+                }).subscribe(
+                    res => {
+                        console.log(1116, res);
+                        const signature2 = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                        console.log(1117, signature2);
+                        this.await = true;
+                        this.signed = true;
+                        console.log(1118, this.slForm);
+                        this.onInvite(this.slForm, signature2);
+                    }, error => {
+                        console.log(error);
+                    }
+                );
+            }
 
-            this.http.post(this.config.server_url + 'getUserInfoByEmail', {
-                email: this.receiver
-            }, {
-                responseType: 'text',
-                withCredentials: true
-            }).subscribe(
-                res => {
-                    const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
-                    console.log(signature);
-                    this.await = true;
-                    this.signed = true;
-                    this.onInvite(this.slForm, signature);
-                }, err => {
-                    this.http.post(this.config.server_url + 'getUserInfoByUsername', {
-                        username: this.receiver
-                    }, {
-                        responseType: 'text',
-                        withCredentials: true
-                    }).subscribe(
-                        res => {
-                            const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
-                            console.log(signature);
-                            this.await = true;
-                            this.signed = true;
-                            this.onInvite(this.slForm, signature);
-                        }, error => {
-                            console.log(error);
-                        }
-                    );
-                }
-            );
+
         } catch {
             alert('Wrong Password!');
         }
@@ -178,16 +188,19 @@ export class PreviewComponent implements OnInit {
 
     onInvite(form: NgForm, signature) {
         const value = form.value;
-
+        console.log(33, value);
         if (value.user.indexOf('@') > -1) {
+            console.log(334);
             this.http.post(this.config.server_url + 'emailExists', {
                 email: value.user
             }, {
                 withCredentials: true,
                 responseType: 'text'
             }).subscribe(res => {
+                console.log(34, res);
                 if (res === 'true') {
-                    this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, signature,(err) => {
+                    console.log(35);
+                    this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, signature, (err) => {
                         if (err) {
                             console.log(err);
                         } else {
@@ -203,13 +216,16 @@ export class PreviewComponent implements OnInit {
                 console.log(err);
             });
         } else {
+            console.log(36, value.user);
             this.http.post(this.config.server_url + 'usernameExists', {
                 username: value.user
             }, {
                 withCredentials: true,
                 responseType: 'text'
             }).subscribe(res => {
+                console.log(367, res);
                 if (res === 'true') {
+                    console.log(37, res);
                     this.uploadAndShareFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, value.user, signature, (err) => {
                         if (err) {
                             console.log(err);
@@ -228,50 +244,61 @@ export class PreviewComponent implements OnInit {
         }
     }
 
-    submitedMultipleInvite() {
-        this.checkUsers();
+    emailExists(user) {
+        return new Promise(resolve => {
+            this.http.post(this.config.server_url + 'emailExists', {
+                email: user
+            }, {
+                withCredentials: true,
+                responseType: 'text'
+            }).toPromise().then(
+                res => {
+                    resolve(JSON.parse(res))
+                }, err => {
+                    console.log(err);
+                }
+            );
+        })
     }
 
-    checkUsers() {
+    usernameExists(user) {
+        return new Promise (resolve => {
+            this.http.post(this.config.server_url + 'usernameExists', {
+                username: user
+            }, {
+                withCredentials: true,
+                responseType: 'text'
+            }).toPromise().then(res => {
+                resolve(JSON.parse(res))
+
+            }, err => {
+                console.log(err);
+            });
+        });
+    }
+
+    async checkUsers() {
         let valid = true;
 
         const value = this.s2Form.form.value;
 
-        const users = value.users.split(',')
+        const users = value.users.split(',');
 
         for (let i = 0; i < users.length; i++) {
+            const user = users[i];
+
             if (users[i].indexOf('@') > -1) {
-                this.http.post(this.config.server_url + 'emailExists', {
-                    email: users[i]
-                }, {
-                    withCredentials: true,
-                    responseType: 'text'
-                }).toPromise().then(
-                    res => {
-                        if (res === 'false') {
-                            // valid = false;
-                            // alert('Email ' + users[i] + ' does not exist.');
-                            // break;
-                        }
-                    }, err => {
-                        console.log(err);
-                    }
-                );
+                if (!(await this.emailExists(user))) {
+                    valid = false;
+                    alert('Email ' + users[i] + ' does not exist.');
+                    // break;
+                }
             } else {
-                this.http.post(this.config.server_url + 'usernameExists', {
-                    username: value.user
-                }, {
-                    withCredentials: true,
-                    responseType: 'text'
-                }).toPromise().then(res => {
-                    if (res === 'false') {
-                        // valid = false;
-                        // alert('Username ' + users[i] + ' does not exist.');
-                        // break;
-                    }
-                }, err => {
-                    console.log(err);
-                });
+                if (!(await this.usernameExists(user))) {
+                    valid = false;
+                    alert('Username ' + users[i] + ' does not exist.');
+                    // break;
+                }
             }
         }
 
@@ -285,67 +312,67 @@ export class PreviewComponent implements OnInit {
         const users = value.users.split(',');
 
         this.uploadFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, (err) => {
-           if (err) {
-               console.log(err);
-           } else {
-               console.log('document uploaded');
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('document uploaded');
 
-               try {
-                   const privateKey = this.web3accounts.decrypt(JSON.parse(this.sessionService.privateKey), this.s2Form.form.value.password);
-                   this.await = true;
+                try {
+                    const privateKey = this.web3accounts.decrypt(JSON.parse(this.sessionService.privateKey), this.s2Form.form.value.password);
+                    this.await = true;
 
-                   for (let user = 0; user < users.length; user++) {
-                       this.http.post(this.config.server_url + 'getUserInfoByEmail', {
-                           email: users[user]
-                       }, {
-                           responseType: 'text',
-                           withCredentials: true
-                       }).subscribe(
-                           res => {
-                               const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
-                               console.log(signature);
-                               this.multipleInviteSignDialog = false;
+                    for (let user = 0; user < users.length; user++) {
+                        this.http.post(this.config.server_url + 'getUserInfoByEmail', {
+                            email: users[user]
+                        }, {
+                            responseType: 'text',
+                            withCredentials: true
+                        }).subscribe(
+                            res => {
+                                const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                                console.log(signature);
+                                this.multipleInviteSignDialog = false;
 
-                               this.sendRequest(this.sessionService.currentDocument.name, users[user], signature,(err2) => {
-                                   if (err2) {
-                                       console.log(err2);
-                                   } else {
-                                       console.log('document shared');
-                                   }
-                               });
-                           }, err3 => {
-                               this.http.post(this.config.server_url + 'getUserInfoByUsername', {
-                                   username: users[user]
-                               }, {
-                                   responseType: 'text',
-                                   withCredentials: true
-                               }).subscribe(
-                                   res => {
-                                       const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
-                                       console.log(signature);
-                                       this.multipleInviteSignDialog = false;
+                                this.sendRequest(this.sessionService.currentDocument.name, users[user], signature, (err2) => {
+                                    if (err2) {
+                                        console.log(err2);
+                                    } else {
+                                        console.log('document shared');
+                                    }
+                                });
+                            }, err3 => {
+                                this.http.post(this.config.server_url + 'getUserInfoByUsername', {
+                                    username: users[user]
+                                }, {
+                                    responseType: 'text',
+                                    withCredentials: true
+                                }).subscribe(
+                                    res => {
+                                        const signature = privateKey.sign(this.sessionService.address.toLowerCase() + JSON.parse(res).address.toLowerCase() + this.sessionService.currentDocument.hash.toLowerCase()).signature.toLowerCase();
+                                        console.log(signature);
+                                        this.multipleInviteSignDialog = false;
 
-                                       this.sendRequest(this.sessionService.currentDocument.name, users[user], signature, (err4) => {
-                                           if (err4) {
-                                               console.log(err4);
-                                           } else {
-                                               console.log('document shared');
-                                           }
-                                       });
-                                   }, error => {
-                                       console.log(error);
-                                   }
-                               );
-                           }
-                       );
+                                        this.sendRequest(this.sessionService.currentDocument.name, users[user], signature, (err4) => {
+                                            if (err4) {
+                                                console.log(err4);
+                                            } else {
+                                                console.log('document shared');
+                                            }
+                                        });
+                                    }, error => {
+                                        console.log(error);
+                                    }
+                                );
+                            }
+                        );
 
-                       this.await = false;
-                       this.showNext = true;
-                   }
-               } catch {
-                   alert('Wrong password.');
-               }
-           }
+                        this.await = false;
+                        this.showNext = true;
+                    }
+                } catch {
+                    alert('Wrong password.');
+                }
+            }
         });
     }
 

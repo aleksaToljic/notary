@@ -68,7 +68,7 @@
         </div>
     </div>
 </form>
-<form (ngSubmit)="submitedMultipleInvite()" class="text-center" #f2="ngForm">
+<form (ngSubmit)="checkUsers()" class="text-center" #f2="ngForm">
     <div *ngIf="multiple">
         <input class="form-control mt-2" name="users" required ngModel
                placeholder="example@email.com,username123,...">
@@ -90,7 +90,7 @@
                     <div class="d-inline-block ui-min-width--320 text-center bg-white p-4">
                         <div class="ui-panel__header ui-color--light-blue mb-4 pb-3 text-left ui-separator--bottom-gray ui-font-weight--bold">
                             Confirmation Dialog
-                            <button (click)="multipleInviteSignDialog = false"
+                            <button
                                     class="ui-width--16 ui-button--close ui-cursor--pointer ui-outline--none border-0 bg-white p-0 float-right ui-height--16">
                                 <span inlineSVG="../../../assets/icon-x.svg"></span>
                             </button>
@@ -106,9 +106,9 @@
         </div>
     </div>
 </form>
-<div class="ui-color-light-gray ui-font-size--14" *ngIf="await"><span
+<div class="ui-color-light-gray ui-font-size--14 mt-2" *ngIf="await"><span
         class="ui-progress-bar"></span><span
-        class="ml-1">Awaiting for Blockchain Transaction...</span></div>
+        class="ml-1 mt-2">Awaiting for Blockchain Transaction...</span></div>
 <div class="text-center mt-5">
     <button *ngIf="showNext && !meAndSecond && !multiple" routerLink="3"
             class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
@@ -128,11 +128,14 @@
                             <span inlineSVG="../../../assets/icon-x.svg"></span>
                         </button>
                     </div>
-                    <span>Your transaction hash is: </span>
-                    <a target="_blank" href="https://kovan.etherscan.io/tx/{{ transactionHash }}">{{ transactionHash
+                    <span class="d-block pb-2 ui-separator--bottom-gray ui-font-size--14 text-left">Your transaction hash is: </span>
+                    <a target="_blank" class="ui-font-size--14"
+                       href="https://kovan.etherscan.io/tx/{{ transactionHash }}">{{ transactionHash
                         }}</a>
-
-                    <button class="btn btn-primary" (click)="transactionB = false; ">Got it</button>
+                    <p class="clear"></p>
+                    <button class="ui-font-size--14 btn ui-color--white mt-2 btn--small ui-button--blue float-left mt-2"
+                            (click)="transactionB = false; ">Got it
+                    </button>
                 </div>
             </div>
         </div>

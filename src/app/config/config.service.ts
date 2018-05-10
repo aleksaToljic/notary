@@ -1,13 +1,7 @@
 export class ConfigService {
 
-    private server_host = '159.65.113.106';
-    private server_port = '3000';
-    private server: string = this.server_host + ':' + this.server_port + '/';
-    private ssl = false;
     server_url: string;
-
-
-    notary_contract_address = '0x45945eab8793eb1668b124531b08e8cd9db92cb3';
+    notary_contract_address = '0xff178a52a458a94a150953494170e597e918fdd0';
     notary_contract_abi: any = [
         {
             'constant': false,
@@ -23,10 +17,6 @@ export class ConfigService {
                 {
                     'name': 'signature',
                     'type': 'string'
-                },
-                {
-                    'name': 'ignored',
-                    'type': 'bool'
                 }
             ],
             'name': 'receive',
@@ -146,7 +136,7 @@ export class ConfigService {
             'inputs': [
                 {
                     'indexed': true,
-                    'name': 'signer',
+                    'name': 'receiver',
                     'type': 'address'
                 },
                 {
@@ -158,11 +148,6 @@ export class ConfigService {
                     'indexed': false,
                     'name': 'signature',
                     'type': 'string'
-                },
-                {
-                    'indexed': true,
-                    'name': 'ignored',
-                    'type': 'bool'
                 }
             ],
             'name': 'Received',
@@ -170,8 +155,11 @@ export class ConfigService {
         }
     ];
     contract_deployed_at_block: number = 0;
-
     network_name: string = 'kovan';
+    private server_host = '159.65.113.106';
+    private server_port = '3000';
+    private server: string = this.server_host + ':' + this.server_port + '/';
+    private ssl = false;
 
     constructor() {
         if (this.ssl === false) {

@@ -1,5 +1,5 @@
 <div class="ui-panel__header ui-color--light-blue mb-3 pb-3 mt-4 ui-separator--bottom-gray ui-font-weight--bold">
-    Signees <span class="ui-width--16 ui-icon--refresh d-inline-block ui-icon--refresh float-right ui-cursor--pointer"
+    Signers <span class="ui-width--16 ui-icon--refresh d-inline-block ui-icon--refresh float-right ui-cursor--pointer"
                   [ngClass]="{'ui-state-active': refreshing}" (click)="refreshEvents()"
                   inlineSVG="../../../assets/icon-refresh.svg"></span>
 </div>
@@ -14,14 +14,14 @@
         <div class="col-11 p-0">
             <span class="ui-font-size--14 ui-color--black-semilight">{{ event.firstname }} {{ event.lastname }}</span>
             <span class="float-right ui-font-weight--bold ui-font-size--12 ui-color--light-gray"
-                  *ngIf="!event.returnValues.agreed">DISAGREED</span>
+                  *ngIf="!event.returnValues.agreed">REJECTED</span>
             <span class="float-right ui-font-weight--bold ui-font-size--12 ui-color--green"
-                  *ngIf="event.returnValues.agreed">AGREED</span>
+                  *ngIf="event.returnValues.agreed">ACCEPTED</span>
             <p class="clear"></p>
             <label (click)="showSignature[i] = !showSignature[i]"
                    class="ui-text-decoration--underline ui-cursor--pointer ui-color--light-gray ui-font-size--12">view
                 signature</label>
-            <span class="float-right ui-color--light-gray ui-font-size--12">{{ event.time | date:'HH:mm , d.MMM.y' }}</span>
+            <span class="float-right ui-color--light-gray ui-font-size--12">{{ event.time | date:'M/d/yy HH:MM:SS' }}</span>
             <div class="ui-font-size--14 ui-color--light-gray ui-word-break--break-all" *ngIf="showSignature[i]">
                 {{ event.returnValues.signature }}
             </div>

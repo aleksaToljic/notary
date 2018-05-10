@@ -14,7 +14,7 @@
                       *ngIf="notification.invitation">Invited you to sign:</span>
                 <span class="ui-color--light-gray ui-font-size--14"
                       *ngIf="!notification.invitation">REJECTED</span>
-                <span class="ui-color--light-gray ui-font-size--12 float-right ui-line-height--27">{{ notification.inviteDate | date:'HH:mm , d.MMM.y'}}</span>
+                <span class="ui-color--light-gray ui-font-size--12 float-right ui-line-height--27">{{ notification.inviteDate | date:'M/d/yy HH:MM:SS'}}</span>
                 <p class="clear"></p>
                 <label class="ui-cursor--pointer ui-color--light-blue ui-font-size--14">{{ notification.documentName }}</label>
             </div>
