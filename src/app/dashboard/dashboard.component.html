@@ -16,10 +16,10 @@
                         <div *ngIf="receivedEvent.valid">
                             <span class="ui-color--dark-blue ui-font-size--14 ">{{ receivedEvent.filename }}</span>
                             <p class="clear"></p>
-                            <span class="ui-font-size--12 ui-color--light-gray float-right">{{ receivedEvent.time | date:'M/d/yy HH:MM:SS' }}</span>
+                            <span class="ui-font-size--12 ui-color--light-gray float-right">{{ receivedEvent.time | date:'M/d/yy HH:mm:ss' }}</span>
                             <span class="ui-font-size--12 ui-color--light-gray float-left">{{ receivedEvent.firstname + ' ' + receivedEvent.lastname }}</span>
                             <p class="clear"></p>
-                            <button *ngIf="showBlockerButtons[i]"
+                            <button *ngIf="showBlockerButtons[i] && !showBlockerPassword[i]"
                                     [disabled]="buttonsDisabled"
                                     class="ui-button--green btn btn--small ui-font-size--12 mt-2 ui-color--white"
                                     (click)="receive(i)">Receive
@@ -27,11 +27,11 @@
 
                             <div *ngIf="showBlockerPassword[i]">
                                 <div *ngIf="!awaitingForTransaction && transactionHash == ''">
-                                    <input type="password" [(ngModel)]="password" class="form-control"
+                                    <input type="password" placeholder="Type your password" [(ngModel)]="password" class="form-control"
                                            style="height: 30px;margin-top: 15px;" name="password">
                                     <p class="clear"></p>
                                     <div class="text-center">
-                                        <button class="ui-font-size--12 btn ui-color--white mt-2 btn--small float-left ui-button--blue"
+                                        <button class="ui-font-size--12 btn ui-color--white mt-3 btn--small float-left ui-button--blue"
                                                 (click)="completeReceivation(i, receivedEvent.returnValues['documentHash'])">
                                             Confirm
                                         </button>
@@ -42,19 +42,17 @@
 
                                 <div class="ui-color-light-gray ui-font-size--14 mt-2"
                                      *ngIf="awaitingForTransaction"
-                                      ><span
+                                ><span
                                         class="ui-progress-bar"></span><span
                                         class="ml-1 mt-2">Awaiting for Blockchain Transaction...</span></div>
                                 <div *ngIf="transactionHash != '' && !awaitingForTransaction">
-                                    Transaction:
-                                    <p class="clear"></p>
-                                    <a target="_blank" href="https://kovan.etherscan.io/tx/{{ transactionHash }}">{{
-                                        transactionHash
-                                        }}</a>
+                                    <a target="_blank" class="ui-font-size--14"
+                                       href="https://kovan.etherscan.io/tx/{{ transactionHash }}">See Transaction
+                                        Details</a>
                                 </div>
                             </div>
 
-<!--TODO remove receive when typing pass, and confirm inline with password-->
+                            <!--TODO remove receive when typing pass, and confirm inline with password-->
                         </div>
                     </div>
                 </div>

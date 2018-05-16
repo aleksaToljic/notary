@@ -4,13 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "webpack-dev-server --port=4200",
-    "light": "node --max_old_space_size=1024 ./node_modules/.bin/ng serve --host 0.0.0.0",
-    "build": "webpack",
-    "test": "karma start ./karma.conf.js",
+    "start": "ng serve",
+    "build": "ng build --prod",
+    "test": "ng test",
     "lint": "ng lint",
-    "e2e": "protractor ./protractor.conf.js",
-    "pree2e": "webdriver-manager update --standalone false --gecko false --quiet"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -34,6 +32,7 @@
     "ngx-progressbar": "^2.1.1",
     "node-sass": "^4.8.3",
     "pdfjs-dist": "^2.0.489",
+    "primeng": "^5.2.6",
     "rxjs": "^5.5.2",
     "web3": "^1.0.0-beta.34",
     "zone.js": "^0.8.14"
@@ -58,8 +57,6 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "^2.5.3",
-    "webpack-dev-server": "~2.7.1",
-    "webpack": "~3.6.0",
     "autoprefixer": "^6.5.3",
     "css-loader": "^0.28.1",
     "cssnano": "^3.10.0",
@@ -76,8 +73,6 @@
     "style-loader": "^0.13.1",
     "stylus-loader": "^3.0.1",
     "url-loader": "^0.6.0",
-    "circular-dependency-plugin": "^3.0.0",
-    "webpack-concat-plugin": "1.4.0",
-    "copy-webpack-plugin": "^4.0.1"
+    "circular-dependency-plugin": "^3.0.0"
   }
 }

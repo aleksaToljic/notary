@@ -3,7 +3,6 @@ import {SessionService} from '../../../shared/session.service';
 import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../../config/config.service';
-import {Router} from '@angular/router';
 import * as Accounts from '../../../web3-eth-accounts/src/index';
 
 @Component({
@@ -27,14 +26,39 @@ export class PreviewComponent implements OnInit {
     multipleInviteSignDialog: boolean;
     multipleTxHashes: any[] = [];
 
+    texts: string[] = [];
+    users: string[] = ['tolja', 'ajaleksa', 'grizzello', 'tolja4', 'aRes', 'aTim', 'tolja2', 'tolja3'];
+    results: string[];
+
     receiver: any;
 
-    constructor(private sessionService: SessionService, private http: HttpClient, private config: ConfigService, private router: Router) {
-        // this.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io'));
+    constructor(private sessionService: SessionService, private http: HttpClient, private config: ConfigService) {
     }
 
     submitedMeAndSecond() {
         this.signedMeAndSecond = true;
+    }
+
+    search(event) {
+        const query = event.query;
+        this.results = this.filterCountry(query, this.users);
+    }
+
+    filterCountry(query, users: any[]): any[] {
+        const filtered: any[] = [];
+        for (let i = 0; i < users.length; i++) {
+            const user = users[i];
+            let isAlready = false;
+            for (const text of this.texts) {
+                if (user === text) {
+                    isAlready = true;
+                }
+            }
+            if (user.toLowerCase().indexOf(query.toLowerCase()) == 0 && !isAlready) {
+                filtered.push(user);
+            }
+        }
+        return filtered;
     }
 
     createSignature() {
@@ -253,23 +277,23 @@ export class PreviewComponent implements OnInit {
                 responseType: 'text'
             }).toPromise().then(
                 res => {
-                    resolve(JSON.parse(res))
+                    resolve(JSON.parse(res));
                 }, err => {
                     console.log(err);
                 }
             );
-        })
+        });
     }
 
     usernameExists(user) {
-        return new Promise (resolve => {
+        return new Promise(resolve => {
             this.http.post(this.config.server_url + 'usernameExists', {
                 username: user
             }, {
                 withCredentials: true,
                 responseType: 'text'
             }).toPromise().then(res => {
-                resolve(JSON.parse(res))
+                resolve(JSON.parse(res));
 
             }, err => {
                 console.log(err);
@@ -280,9 +304,7 @@ export class PreviewComponent implements OnInit {
     async checkUsers() {
         let valid = true;
 
-        const value = this.s2Form.form.value;
-
-        const users = value.users.split(',');
+        const users = this.texts;
 
         for (let i = 0; i < users.length; i++) {
             const user = users[i];
@@ -308,8 +330,7 @@ export class PreviewComponent implements OnInit {
     }
 
     createMultipleSignature() {
-        const value = this.s2Form.form.value;
-        const users = value.users.split(',');
+        const users = this.texts;
 
         this.uploadFile(this.sessionService.currentDocument.name, this.sessionService.currentDocument.content, (err) => {
             if (err) {

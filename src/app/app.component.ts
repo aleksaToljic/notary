@@ -1,26 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {SessionService} from './shared/session.service';
-import {ConfigService} from './config/config.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-    constructor(private http: HttpClient, private sessionService: SessionService, private config: ConfigService) {
+    constructor(private http: HttpClient, private sessionService: SessionService) {
+        sessionService.getSession();
     }
 
-    ngOnInit() {
-        this.http.get(this.config.server_url + 'session', {withCredentials: true}).subscribe(
-            res => {
-                if (!(Object.keys(res).length === 0 && res.constructor === Object)) {
-                    this.sessionService.loggedin = true;
-                }
-            }
-        );
-    }
 
 }

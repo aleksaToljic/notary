@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionService} from '../../../shared/session.service';
-import {PDFDocumentProxy, PDFProgressData} from 'pdfjs-dist';
+import {PDFDocumentProxy} from 'pdfjs-dist';
 import {NgProgress} from 'ngx-progressbar';
 import {saveAs} from 'file-saver';
 
@@ -10,7 +10,9 @@ import {saveAs} from 'file-saver';
     styleUrls: ['./preview-wrapper.component.scss']
 })
 export class PreviewWrapperComponent implements OnInit {
-    // aaa: FileSaver = new FileSaver();
+    page = 1;
+    pdf: any;
+    pdfLoaded = false;
 
     constructor(public sessionService: SessionService, private ngProgress: NgProgress) {
     }
@@ -21,9 +23,7 @@ export class PreviewWrapperComponent implements OnInit {
 
     downloadDocument() {
         const blob = this.dataURItoBlob(this.sessionService.currentDocument.content);
-        // const blob = new Blob([this.sessionService.currentDocument.content], {type: 'application/pdf'});
         const filename = this.sessionService.currentDocument.name;
-        // const file = new File([this.sessionService.currentDocument.content], filename, {type: 'application/pdf'});
         saveAs(blob, filename);
     }
 
@@ -48,15 +48,16 @@ export class PreviewWrapperComponent implements OnInit {
         return new Blob([ia], {type: mimeString});
     }
 
-    callBackFn(pdf: PDFDocumentProxy) {
+    incrementPage(amount: number) {
+        this.page += amount;
+    }
+
+    afterLoadComplete(pdf: PDFDocumentProxy) {
         // do anything with "pdf"
-        // console.log(111, pdf);
+        this.pdf = pdf;
+        this.pdfLoaded = true;
+        console.log(pdf);
         this.ngProgress.done();
     }
 
-    onProgress(progressData: PDFProgressData) {
-        // do anything with progress data. For example progress indicator
-        // console.log(222, progressData);
-
-    }
 }

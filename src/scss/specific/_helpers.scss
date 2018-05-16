@@ -31,8 +31,6 @@
   cursor: default;
 }
 
-
-
 .ui-progress-bar {
   width: 18px;
   height: 18px;
@@ -47,7 +45,9 @@
   animation: progress-spinner 400ms linear infinite;
 }
 
-
+.ng2-pdf-viewer-container {
+  overflow-x: hidden !important;
+}
 
 .ui-sortable-column {
 

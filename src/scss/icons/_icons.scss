@@ -44,3 +44,13 @@
 .ui-notification .active path {
   stroke: $darkred_color;
 }
+
+.ui-icon--arrow-up {
+  @include vendor-o(transition, transform .4s ease);
+  path {
+    fill: $black_semilight_color;
+  }
+  &.reverse {
+    @include vendor(transform, rotateX(180deg));
+  }
+}

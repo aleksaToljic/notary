@@ -3,6 +3,7 @@ import {SessionService} from '../../shared/session.service';
 import * as Web3 from '../../../../node_modules/web3/src';
 import {ConfigService} from '../../config/config.service';
 import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-signees-list',
@@ -10,20 +11,47 @@ import {HttpClient} from '@angular/common/http';
     styleUrls: ['./signees-list.component.scss']
 })
 export class SigneesListComponent implements OnInit {
-
+    descending = false;
     showSignature: boolean[] = [];
     web3: any;
     notaryContract: any;
-
+    filterString: string;
+    column = '';
+    order: number;
     refreshing = false;
+    isAudit = false;
 
-    constructor(public sessionService: SessionService, private config: ConfigService, private http: HttpClient) {
+    constructor(public sessionService: SessionService, private config: ConfigService, private http: HttpClient, private route: ActivatedRoute) {
         this.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io'));
 
 
         this.notaryContract = new this.web3.eth.Contract(this.config.notary_contract_abi, this.config.notary_contract_address);
         this.refreshEvents();
     }
+
+    sort(column) {
+        this.column = column;
+        this.descending = !this.descending;
+        this.order = this.descending ? 1 : -1;
+        console.log('order', this.order);
+    }
+
+    getASCBool(column) {
+        if (this.column === column && this.order !== undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    getDSCBool(column) {
+        if (this.column === column && this.order === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     refreshEvents() {
         this.refreshing = true;
@@ -39,7 +67,7 @@ export class SigneesListComponent implements OnInit {
             this.getBlocksMinedAt();
             this.checkEventsValidity();
             console.log(22, error, events);
-
+            this.filterString = '';
             for (let x = 0; x < events.length; x++) {
                 this.showSignature.push(false);
             }
@@ -50,8 +78,10 @@ export class SigneesListComponent implements OnInit {
 
 
     ngOnInit() {
+        if (this.route.snapshot.fragment === 'audit') {
+            this.isAudit = true;
+        }
     }
-
 
 
     getEventsInfo() {

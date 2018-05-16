@@ -16,10 +16,8 @@ export class SessionService {
     public documentUploaded = false;
     documentUploadedSubject = new Subject();
     public currentEvents = [];
-
     addressReceived = new Subject();
 
-    // public fileDraggedOver = false;
 
     constructor(private http: HttpClient, private config: ConfigService, private router: Router) {
     }
@@ -74,6 +72,24 @@ export class SessionService {
             sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
             i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    getSession() {
+        this.http.get(this.config.server_url + 'session', {withCredentials: true}).subscribe(
+            res => {
+                console.log(res);
+                if (!(Object.keys(res).length === 0 && res.constructor === Object)) {
+                    this.loggedin = true;
+                    this.username = res['username'];
+
+                    this.address = res['address'];
+
+                    console.log(111, this.address);
+                    this.addressReceived.next(true);
+                    this.privateKey = res['private'];
+                }
+            }
+        );
     }
 
     private prepareHeader(headers: HttpHeaders | null): object {

@@ -16,24 +16,27 @@
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-7">
-                        <div class="btn-group float-left mb-3 mt-5" appDropdown>
-                            <button type="button"
-                                    class="btn btn-light ui-font-size--12 ui-border--light-blue dropdown-toggle">
-                                Page 1<span
-                                    class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" style="cursor: pointer">Page 1</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" style="cursor: pointer">Page 2</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" style="cursor: pointer">Page 3</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <button (click)="downloadDocument()" class="btn btn-light float-right mb-3 mt-5 ui-font-size--12 ui-border--light-blue">
+                        <!--<span>{{pdf.numPages}}</span>-->
+                        <span class="ui-font-size--14 ui-color--black-semilight float-left ui-margin-top--57 ui-margin-right--11">Page: </span> <p-spinner size="30" class="mt-5 pt-1 float-left ui-spinner--width-70 ui-spinner--text-center" *ngIf="pdfLoaded" [(ngModel)]="page" [min]="1" [max]="pdf.numPages"></p-spinner>
+                        <!--<div class="btn-group float-left mb-3 mt-5" appDropdown>-->
+                        <!--<button type="button"-->
+                        <!--class="btn btn-light ui-font-size&#45;&#45;12 ui-border&#45;&#45;light-blue dropdown-toggle">-->
+                        <!--Page 1<span-->
+                        <!--class="caret"></span></button>-->
+                        <!--<ul class="dropdown-menu">-->
+                        <!--<li>-->
+                        <!--<a class="dropdown-item" style="cursor: pointer">Page 1</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                        <!--<a class="dropdown-item" style="cursor: pointer">Page 2</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                        <!--<a class="dropdown-item" style="cursor: pointer">Page 3</a>-->
+                        <!--</li>-->
+                        <!--</ul>-->
+                        <!--</div>-->
+                        <button (click)="downloadDocument()"
+                                class="btn btn-light float-right mb-3 mt-5 ui-font-size--12 ui-border--light-blue">
                             Download
                         </button>
                         <p class="clear"></p>
@@ -41,8 +44,9 @@
                             <div class="some-pdf-container">
 
                                 <pdf-viewer style="width: 100%;max-width: 730px" class="d-block ui-max-width--full-360"
-                                            [original-size]="false" [fit-to-page]="true"
-                                            [autoresize]="true" (after-load-complete)="callBackFn($event)"
+                                            [original-size]="false" [fit-to-page]="true" [show-all]="false"
+                                            [(page)]="page"
+                                            [autoresize]="true" (after-load-complete)="afterLoadComplete($event)"
                                             [src]="sessionService.currentDocument.content"></pdf-viewer>
                                 <!--<ngx-imageviewer src="https://www.tutorialspoint.com/java/java_tutorial.pdf"></ngx-imageviewer>-->
                             </div>

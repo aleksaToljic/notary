@@ -5,6 +5,7 @@ import {NgForm} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from '../../../../config/config.service';
 import {NgProgress} from 'ngx-progressbar';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-preview-step-3',
@@ -17,6 +18,7 @@ export class PreviewStep3Component implements OnInit {
     signInput: string;
     agreed: boolean;
     showHash: boolean;
+    isAudit = false;
 
     transactionHash: string;
 
@@ -29,7 +31,7 @@ export class PreviewStep3Component implements OnInit {
 
     // events: any[];
 
-    constructor(public sessionService: SessionService, private http: HttpClient, private config: ConfigService, private ngprogress: NgProgress) {
+    constructor(public sessionService: SessionService, private http: HttpClient, private config: ConfigService, private ngprogress: NgProgress, private route: ActivatedRoute) {
     }
 
 
@@ -88,6 +90,9 @@ export class PreviewStep3Component implements OnInit {
     }
 
     ngOnInit() {
+        if (this.route.snapshot.fragment === 'audit') {
+            this.isAudit = true;
+        }
     }
 
 

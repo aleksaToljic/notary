@@ -5,6 +5,7 @@
 @include create_base_class_px(font-size, 18);
 @include create_base_class_px(font-size, 36);
 
+@include create_base_class_px(width, 6);
 @include create_base_class_px(width, 15);
 @include create_base_class_px(width, 16);
 @include create_base_class_px(width, 30);
@@ -14,11 +15,18 @@
 @include create_base_class_px(width, 106);
 @include create_base_class_px(width, 190);
 
-
+@include create_base_class_px(margin-top, 1);
 @include create_base_class_px(margin-top, 10);
+@include create_base_class_px(margin-top, 57);
+
+@include create_base_class_px(margin-right, 11);
+
+@include create_base_class_px(margin-bottom, 12);
 
 @include create_base_class_px(height, 16);
 @include create_base_class_px(height, 30);
+
+@include create_base_class_px(max-height, 256);
 
 @include create_base_class_px(max-width, 330);
 
@@ -48,12 +56,14 @@
 @include create_base_class(display, table-cell);
 
 @include create_base_class(line-height, 0);
+@include create_base_class_px(line-height, 21);
 @include create_base_class_px(line-height, 27);
 
 @include create_base_class(vertical-align, middle);
 @include create_base_class(text-decoration, underline);
 @include create_base_class(word-break, break-all);
 @include create_base_class(cursor, pointer);
+@include create_base_class(overflow, auto);
 @include create_base_class(font-weight, 300, light);
 @include create_base_class(font-weight, 600, bold);
 @include create_base_class(font-weight, 800, black);
@@ -66,6 +76,7 @@
 .ui-width--full-100 {
   @include calc(width, '100% - 100px');
 }
+
 .ui-width--full-85 {
   @include calc(width, '100% - 85px');
 }
@@ -97,4 +108,8 @@
 
 .ui-border--blue {
   border: 1px solid $border_blue;
+}
+
+.ui-user-select--none {
+  @include user-select(none);
 }

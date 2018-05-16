@@ -29,13 +29,21 @@ export class StorageComponent implements OnInit {
         this.order = this.descending ? 1 : -1;
     }
 
-    // sortFilesBySize() {
-    //
-    //     this.files.sort((a: any, b: any) => {
-    //         return a.valueOf() - b.valueOf();
-    //     });
-    //
-    // }
+    getASCBool(column) {
+        if (this.column === column && this.order !== undefined) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    getDSCBool(column) {
+        if (this.column === column && this.order === 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     getFile(path, cb) {
         this.http.post(this.config.server_url + 'getFile', {
@@ -61,7 +69,7 @@ export class StorageComponent implements OnInit {
                 this.sessionService.currentDocument.type = 'application/pdf';
                 this.sessionService.currentDocument.content = content;
                 this.sessionService.currentDocument.hash = this.web3.utils.sha3(content);
-                this.router.navigate(['notary/new-agreement/preview/3']);
+                this.router.navigate(['notary/new-agreement/preview/3'], {fragment: 'audit'});
             }
         });
     }
@@ -90,7 +98,7 @@ export class StorageComponent implements OnInit {
                     this.files.push({
                         name: files[i].name,
                         sizeB: files[i].fileInfo['{DAV:}getcontentlength'] * 1,
-                        fileType: extension
+                        fileType: extension.toLowerCase()
                     });
                 }
             }

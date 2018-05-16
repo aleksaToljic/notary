@@ -25,7 +25,11 @@
                     </div>
                     <app-document></app-document>
                     <div class="text-center my-5">
-                        <button routerLink="preview" [disabled]="!sessionService.documentUploaded"
+                        <button *ngIf="!isAudit" routerLink="preview" [disabled]="!sessionService.documentUploaded"
+                                class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
+                            Next
+                        </button>
+                        <button *ngIf="isAudit" routerLink="preview/3" fragment="audit" [disabled]="!sessionService.documentUploaded"
                                 class=" w-50 btn ui-button--blue ui-color--white ui-font-weight--bold ui-font-size--14">
                             Next
                         </button>

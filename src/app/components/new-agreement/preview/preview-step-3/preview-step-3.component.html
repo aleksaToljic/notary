@@ -2,11 +2,11 @@
     {{ sessionService.currentDocument.name }}
 </div>
 <div class="ui-color--light-gray ">
-    <label (click)="toggleHash()" class=" pl-0 ui-cursor--pointer ui-text-decoration--underline col-7">
+    <label (click)="toggleHash()" class=" pl-0 ui-cursor--pointer ui-text-decoration--underline col-6">
         <span inlineSVG="../../../../assets/icon-key.svg" class="ui-icon--key mr-1 ui-icon--key-normalize"></span>
         Show Hash
     </label>
-    <span class="col-5 pr-0">{{(sessionService.currentDocument.size / (1024 * 1024)).toFixed(2) }}Mb ({{ sessionService.currentDocument.type.split('/')[1].toUpperCase() }})</span>
+    <span class="col-6 pr-0 float-right text-right">{{ sessionService.formatBytes(sessionService.currentDocument.size, 2) }} ({{ sessionService.currentDocument.type.split('/')[1].toUpperCase() }})</span>
     <div class="ui-font-size--14 ui-word-break--break-all" *ngIf="showHash">
         <div>{{ sessionService.currentDocument.hash }}</div>
     </div>
@@ -36,7 +36,9 @@
                         </button>
                     </div>
                     <form (ngSubmit)="onSign(f2)" #f2="ngForm">
-                        <input name="pass" type="password" required placeholder="Type your password" ngModel class="form-control">
+                        <input name="pass" type="password" autocomplete="new-password" required
+                               placeholder="Type your password" ngModel
+                               class="form-control">
                         <button class="btn mt-4 btn-primary">Confirm</button>
                     </form>
                 </div>
@@ -49,10 +51,19 @@
         <div class=" ui-display--table-row">
             <div class="ui-display--table-cell text-center align-middle">
                 <div class="d-inline-block text-center bg-white p-4">
-                    <span>Your transaction hash is: </span>
-                    <a target="_blank" href="https://kovan.etherscan.io/tx/{{transactionHash}}">{{ transactionHash }}</a>
-
-                    <button class="btn btn-primary" (click)="signed = false">Ok</button>
+                    <div class="ui-panel__header ui-color--light-blue mb-3 pb-3 text-left ui-separator--bottom-gray ui-font-weight--bold">
+                        Document Status
+                        <button (click)="signed = false"
+                                class="ui-width--16 ui-button--close ui-cursor--pointer ui-outline--none border-0 bg-white p-0 float-right ui-height--16">
+                            <span inlineSVG="../../../assets/icon-x.svg"></span>
+                        </button>
+                    </div>
+                    <span class="d-block pb-2 ui-separator--bottom-gray ui-font-size--14 text-left">You have accepted the document.</span>
+                    <a target="_blank" class="ui-font-size--14 d-block text-left mt-1"
+                       href="https://kovan.etherscan.io/tx/{{transactionHash}}">Transaction details</a>
+                    <button class="ui-font-size--14 btn ui-color--white mt-3 btn--small ui-button--blue float-left mt-2"
+                            (click)="signed = false">Got it
+                    </button>
                 </div>
             </div>
         </div>

@@ -10,13 +10,20 @@
                             </div>
 
                             <div class="px-3 ui-separator--bottom-gray">
-                                <input class="form-control ui-max-width--330 mt-3 ui-height--30" type="text" placeholder="Search the document"
+                                <input class="form-control ui-max-width--330 mt-3 ui-height--30" type="text"
+                                       placeholder="Search the document"
                                        [(ngModel)]="filterString">
-                                <div  class="d-inline-block py-3 pl-3 ui-sortable-column ui-width--full-85" (click)="sort('name')">
-                                    <span>SortName</span>
+                                <div class="d-inline-block py-3 pl-3 ui-user-select--none ui-cursor--pointer ui-sortable-column ui-width--full-85"
+                                     (click)="sort('name')">
+                                    <span class="ui-font-size--14 ui-color--black-semilight">Sort Document</span>
+                                    <span class="ui-icon--arrow-up d-inline-block ui-width--6" [ngClass]="{reverse: getDSCBool('name')}"
+                                          *ngIf="getASCBool('name')"><span inlineSVG="../../../assets/long-arrow-alt-up.svg"></span></span>
                                 </div>
-                                <div (click)="sort('sizeB')" class="ui-width--80 ui-sortable-column py-3 d-inline-block">
-                                    SortSize
+                                <div (click)="sort('sizeB')"
+                                     class="ui-width--80 ui-sortable-column py-3 ui-user-select--none ui-cursor--pointer d-inline-block">
+                                    <span class="ui-font-size--14 ui-color--black-semilight">Sort Size</span>
+                                    <span class="ui-icon--arrow-up d-inline-block ui-width--6" [ngClass]="{reverse: getDSCBool('sizeB')}"
+                                          *ngIf="getASCBool('sizeB')"><span inlineSVG="../../../assets/long-arrow-alt-up.svg"></span></span>
                                 </div>
                                 <p class="clear"></p>
 

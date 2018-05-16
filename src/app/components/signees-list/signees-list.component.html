@@ -5,27 +5,60 @@
 </div>
 <!--animate refresh button-->
 <!--should go *ngFor from signees list-->
-<div
-     *ngFor="let event of sessionService.currentEvents; let i = index;">
-    <div class="row m-0 mb-3 pb-1 ui-separator--bottom-gray" *ngIf="event.valid">
-        <div class="col-1 p-0">
-            <span class="ui-icon--signees float-right m-2" inlineSVG="../../assets/icon-signees.svg"></span>
-        </div>
-        <div class="col-11 p-0">
-            <span class="ui-font-size--14 ui-color--black-semilight">{{ event.firstname }} {{ event.lastname }}</span>
-            <span class="float-right ui-font-weight--bold ui-font-size--12 ui-color--light-gray"
-                  *ngIf="!event.returnValues.agreed">REJECTED</span>
-            <span class="float-right ui-font-weight--bold ui-font-size--12 ui-color--green"
-                  *ngIf="event.returnValues.agreed">ACCEPTED</span>
-            <p class="clear"></p>
-            <label (click)="showSignature[i] = !showSignature[i]"
-                   class="ui-text-decoration--underline ui-cursor--pointer ui-color--light-gray ui-font-size--12">view
-                signature</label>
-            <span class="float-right ui-color--light-gray ui-font-size--12">{{ event.time | date:'M/d/yy HH:MM:SS' }}</span>
-            <div class="ui-font-size--14 ui-color--light-gray ui-word-break--break-all" *ngIf="showSignature[i]">
-                {{ event.returnValues.signature }}
+<div *ngIf="isAudit"  class=" ui-separator--bottom-gray ui-margin-bottom--12">
+    <input class="form-control ui-max-width--330 mt-3 ui-height--30" type="text"
+           placeholder="Search the Signers by Last Name"
+           [(ngModel)]="filterString">
+    <div class="d-inline-block py-3 ui-sortable-column ui-user-select--none ui-cursor--pointer ui-width--full-85"
+         (click)="sort('lastname')">
+        <span class="ui-font-size--14 ui-color--black-semilight">Sort Last Name</span>
+        <span class="ui-icon--arrow-up d-inline-block ui-width--6" [ngClass]="{reverse: getDSCBool('lastname')}"
+              *ngIf="getASCBool('lastname')"><span inlineSVG="../../../assets/long-arrow-alt-up.svg"></span></span>
+        <!--<span class="ui-icon&#45;&#45;arrow-up"-->
+        <!--*ngIf="getDSCBool('lastname')"><span inlineSVG="../../../assets/long-arrow-alt-up.svg"></span></span>-->
+    </div>
+    <div (click)="sort('time')"
+         class="ui-width--80 ui-user-select--none ui-cursor--pointer ui-sortable-column py-3 d-inline-block">
+        <span class="ui-font-size--14 ui-color--black-semilight">Sort Time</span>
+        <span class="ui-icon--arrow-up d-inline-block ui-width--6" [ngClass]="{reverse: getDSCBool('time')}"
+              *ngIf="getASCBool('time')"><span inlineSVG="../../../assets/long-arrow-alt-up.svg"></span></span>
+        <!--<span class="ui-icon&#45;&#45;arrow-up"  -->
+        <!--*ngIf="getDSCBool('time')"><span inlineSVG="../../../assets/long-arrow-alt-up.svg"></span></span>-->
+    </div>
+    <p class="clear"></p>
+
+
+</div>
+<div *ngIf="(sessionService.currentEvents | filter:filterString:'lastname').length === 0">
+    <span class="ui-font-size--14 ui-color--black-semilight">No Signers found.</span>
+</div>
+<div [ngClass]="{'mb-4': isAudit}" class="ui-max-height--256 ui-overflow--auto">
+    <div
+            *ngFor="let event of sessionService.currentEvents | filter:filterString:'lastname' | sort: {property: column, order: order}; let i = index;">
+
+        <div class="row m-0 mb-3 pb-1 ui-separator--bottom-gray" *ngIf="event.valid">
+
+            <div class="col-1 p-0">
+            <span class="ui-icon--signees float-right mr-2 ui-margin-top--1"
+                  inlineSVG="../../assets/icon-signees.svg"></span>
             </div>
-            <!--<span class="float-right ui-color&#45;&#45;lightgray ui-font-size&#45;&#45;12"></span>-->
+            <div class="col-11 p-0">
+                <span class="ui-font-size--14 ui-color--black-semilight float-left">{{ event.firstname }} {{ event.lastname }}</span>
+                <span class="float-right ui-font-weight--bold ui-font-size--12 ui-line-height--21 ui-color--light-gray"
+                      *ngIf="!event.returnValues.agreed">REJECTED</span>
+                <span class="float-right ui-font-weight--bold ui-font-size--12 ui-line-height--21 ui-color--green"
+                      *ngIf="event.returnValues.agreed">ACCEPTED</span>
+                <p class="clear"></p>
+                <label (click)="showSignature[i] = !showSignature[i]"
+                       class="ui-text-decoration--underline float-left ui-cursor--pointer ui-color--light-gray ui-font-size--12">view
+                    signature</label>
+                <span class="float-right ui-color--light-gray ui-font-size--12">{{ event.time | date:'M/d/yy HH:mm:ss' }}</span>
+                <p class="clear"></p>
+                <div class="ui-font-size--14 ui-color--light-gray ui-word-break--break-all" *ngIf="showSignature[i]">
+                    {{ event.returnValues.signature }}
+                </div>
+                <!--<span class="float-right ui-color&#45;&#45;lightgray ui-font-size&#45;&#45;12"></span>-->
+            </div>
         </div>
     </div>
 </div>

@@ -68,10 +68,17 @@
         </div>
     </div>
 </form>
+<div *ngIf="multiple">
+    <p-autoComplete placeholder="Search for the users"
+                    class="ui-autocomplete--form"
+                    emptyMessage="There is no such user" [(ngModel)]="texts" [suggestions]="results"
+                    [forceSelection]="true" (completeMethod)="search($event)" [multiple]="true"></p-autoComplete>
+</div>
 <form (ngSubmit)="checkUsers()" class="text-center" #f2="ngForm">
     <div *ngIf="multiple">
-        <input class="form-control mt-2" name="users" required ngModel
-               placeholder="example@email.com,username123,...">
+
+        <!--<input class="form-control mt-2" name="users" required ngModel-->
+        <!--placeholder="example@email.com,username123,...">-->
         <textarea class="form-control mt-2" name="message" ngModel required placeholder="Optional message"></textarea>
 
     </div>
@@ -153,12 +160,15 @@
                             <span inlineSVG="../../../assets/icon-x.svg"></span>
                         </button>
                     </div>
-                    <span>Transaction hashes are: </span>
-                    <div *ngFor="let tx of multipleTxHashes">
-                        <a target="_blank" href="https://kovan.etherscan.io/tx/{{tx}}">{{ tx }}</a><br/>
+                    <span class="d-block pb-2 ui-separator--bottom-gray ui-font-size--14 text-left">See transactions details: </span>
+                    <div class="ui-word-break--break-all text-left" *ngFor="let tx of multipleTxHashes">
+                        <a target="_blank" class="ui-font-size--14" href="https://kovan.etherscan.io/tx/{{tx}}">{{ tx
+                            }}</a><br/>
                     </div>
 
-                    <button class="btn btn-primary" (click)="transactionB = false; ">Ok</button>
+                    <button class="ui-font-size--14 btn ui-color--white mt-2 btn--small ui-button--blue float-left mt-2"
+                            (click)="transactionB = false; ">Got it
+                    </button>
                 </div>
             </div>
         </div>

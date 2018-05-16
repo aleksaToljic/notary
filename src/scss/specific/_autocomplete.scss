@@ -1,0 +1,17 @@
+//autocomplete that looks like standard input
+.ui-autocomplete--form {
+  .ui-autocomplete-multiple-container.ui-inputtext {
+    width: 100%;
+    padding: 4px 0 4px 12px;
+    font-size: 14px;
+    @include vendor(border-radius, 4px);
+  }
+  .ui-inputtext.ui-state-focus {
+    @include vendor(box-shadow, none);
+    border-color: $focus_color !important;
+  }
+  .ui-autocomplete-multiple {
+    width: 100%;
+    margin-top: 4px;
+  }
+}
