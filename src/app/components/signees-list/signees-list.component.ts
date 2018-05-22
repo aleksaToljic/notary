@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../../shared/session.service';
 import * as Web3 from '../../../../node_modules/web3/src';
 import {ConfigService} from '../../config/config.service';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
     selector: 'app-signees-list',
     templateUrl: './signees-list.component.html',
     styleUrls: ['./signees-list.component.scss']
 })
-export class SigneesListComponent implements OnInit {
+export class SigneesListComponent implements OnInit, OnDestroy {
     descending = false;
     showSignature: boolean[] = [];
     web3: any;
@@ -20,6 +21,7 @@ export class SigneesListComponent implements OnInit {
     order: number;
     refreshing = false;
     isAudit = false;
+    subscription = new Subscription();
 
     constructor(public sessionService: SessionService, private config: ConfigService, private http: HttpClient, private route: ActivatedRoute) {
         this.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io'));
@@ -81,6 +83,11 @@ export class SigneesListComponent implements OnInit {
         if (this.route.snapshot.fragment === 'audit') {
             this.isAudit = true;
         }
+        this.subscription = this.sessionService.notificationSwitch.subscribe(res => {
+            if (res) {
+                this.refreshEvents();
+            }
+        });
     }
 
 
@@ -137,5 +144,9 @@ export class SigneesListComponent implements OnInit {
             }
         }
 
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

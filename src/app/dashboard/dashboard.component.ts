@@ -6,6 +6,8 @@ import * as Web3 from '../../../node_modules/web3/src';
 import {Subscription} from 'rxjs/Subscription';
 import {NgForm} from '@angular/forms';
 import * as Accounts from '../web3-eth-accounts/src/index';
+import {NotificationService} from '../components/notification/notification.service';
+import {Notification} from '../components/notification/notification.model';
 
 @Component({
     selector: 'app-dashboard',
@@ -32,10 +34,11 @@ export class DashboardComponent implements OnInit {
     buttonsDisabled: boolean;
 
     recievedDocuments: any[] = [];
+    recievedNotificationEvents: any[] = [];
 
     checkInterval: any;
 
-    constructor(private config: ConfigService, private sessionService: SessionService, private http: HttpClient) {
+    constructor(private config: ConfigService, private sessionService: SessionService, private http: HttpClient, private notificationService: NotificationService) {
         this.web3 = new Web3(new Web3.providers.HttpProvider('https://kovan.infura.io'));
 
         this.notaryContract = new this.web3.eth.Contract(this.config.notary_contract_abi, this.config.notary_contract_address);
@@ -53,6 +56,7 @@ export class DashboardComponent implements OnInit {
 
 
     }
+
 
     refreshEvents() {
         this.recievedDocuments = [];
@@ -125,14 +129,23 @@ export class DashboardComponent implements OnInit {
                 }
             }, 5000);
         }
-
-        // setInterval(() => {
-        //     console.log(123);
-        //     if (this.blocked === false) {
-        //         this.checkedBlocked();
-        //     }
-        //
-        // }, 5000);
+        // this.getNotificationEvents();
+        setTimeout(() => {
+            // this.getNotificationEvents();
+            this.http.get(this.config.server_url + 'lastEventTimestamp', {
+                withCredentials: true
+            }).subscribe(res => {
+                    console.log('bem ti leba', res);
+                },
+                err => {
+                    console.log(err);
+                });
+            // console.log('JEBOTEE', this.recievedNotificationEvents);
+            // for (const notificationEvent of this.recievedNotificationEvents) {
+            //     const notification = new Notification(notificationEvent.username, notificationEvent.time, true, notificationEvent.filename);
+            //     this.notificationService.addNotification(notification);
+            // }
+        }, 10000);
     }
 
     checkBlock() {

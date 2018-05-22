@@ -15,7 +15,8 @@ import {SessionService} from './shared/session.service';
 import {AuthGuard} from './shared/auth-guard.service';
 import {PreviewGuard} from './shared/preview-guard.service';
 import {NgProgressModule} from 'ngx-progressbar';
-
+import {GrowlModule} from 'primeng/growl';
+import {MessageService} from 'primeng/components/common/messageservice';
 
 @NgModule({
     declarations: [
@@ -30,10 +31,15 @@ import {NgProgressModule} from 'ngx-progressbar';
         ReactiveFormsModule,
         HttpClientModule,
         InlineSVGModule,
-        NgProgressModule
+        NgProgressModule,
+        GrowlModule
     ],
     providers: [
-        ConfigService, SessionService, AuthGuard, PreviewGuard
+        ConfigService,
+        SessionService,
+        AuthGuard,
+        PreviewGuard,
+        MessageService
     ],
     bootstrap: [AppComponent]
 })

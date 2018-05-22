@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {SessionService} from './shared/session.service';
 
 @Component({
@@ -9,7 +8,7 @@ import {SessionService} from './shared/session.service';
 })
 export class AppComponent {
 
-    constructor(private http: HttpClient, private sessionService: SessionService) {
+    constructor(public sessionService: SessionService) {
         sessionService.getSession();
     }
 

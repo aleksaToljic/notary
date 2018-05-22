@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Subject} from 'rxjs/Subject';
+import {Message} from 'primeng/api';
+import {MessageService} from 'primeng/components/common/messageservice';
 
 @Injectable()
 export class SessionService {
@@ -17,9 +19,10 @@ export class SessionService {
     documentUploadedSubject = new Subject();
     public currentEvents = [];
     addressReceived = new Subject();
+    notificationSwitch = new Subject();
+    msgs: Message[] = [];
 
-
-    constructor(private http: HttpClient, private config: ConfigService, private router: Router) {
+    constructor(private http: HttpClient, private config: ConfigService, private router: Router, private messageService: MessageService) {
     }
 
     isLoggedIn() {
@@ -119,6 +122,7 @@ export class SessionService {
 //     privateKey: any;
 //
 // }
+
 interface DocumentProperties {
     name: string;
     size: number;

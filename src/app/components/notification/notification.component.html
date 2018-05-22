@@ -8,15 +8,14 @@
                 <span class="ui-font-size--14 ui-color--black-semilight"> ({{ notifications.length }})</span>
             </div>
             <div class="py-2 ui-separator--bottom-gray" *ngFor="let notification of notifications">
-                <span class="ui-color--black-semilight ui-font-size--14 ui-font-weight--bold">{{ notification.inviterUsername }}</span>
+                <span class="ui-color--black-semilight ui-font-size--14 ui-font-weight--bold">{{ notification.username }}</span>
                 <p class="clear"></p>
-                <span class="ui-color--light-gray ui-font-size--14"
-                      *ngIf="notification.invitation">Invited you to sign:</span>
-                <span class="ui-color--light-gray ui-font-size--14"
-                      *ngIf="!notification.invitation">REJECTED</span>
-                <span class="ui-color--light-gray ui-font-size--12 float-right ui-line-height--27">{{ notification.inviteDate | date:'M/d/yy HH:mm:ss'}}</span>
+                <span class="ui-color--light-gray ui-font-size--14">Invited you to sign:</span>
+                <!--<span class="ui-color&#45;&#45;light-gray ui-font-size&#45;&#45;14"-->
+                <!--*ngIf="!notification.invitation">REJECTED</span>-->
+                <span class="ui-color--light-gray ui-font-size--12 float-right ui-line-height--27">{{ notification.time | date:'M/d/yy HH:mm:ss'}}</span>
                 <p class="clear"></p>
-                <label class="ui-cursor--pointer ui-color--light-blue ui-font-size--14">{{ notification.documentName }}</label>
+                <label class="ui-cursor--pointer ui-color--light-blue ui-font-size--14" (click)="openFile(notification.filename, notification.filesize, notification.filesha3)">{{ notification.filename }}</label>
             </div>
         </div>
     </div>

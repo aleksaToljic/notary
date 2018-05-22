@@ -1,4 +1,7 @@
 <app-header></app-header>
+<div *ngFor="let receivedNot of recievedNotificationEvents">
+    {{receivedNot.filename}}
+</div>
 <div *ngIf="blocked" class="ui-dialog--block">
     <div class="ui-display--table ui-height--full-browser-56 w-100">
         <div class=" ui-display--table-row">
@@ -27,7 +30,8 @@
 
                             <div *ngIf="showBlockerPassword[i]">
                                 <div *ngIf="!awaitingForTransaction && transactionHash == ''">
-                                    <input type="password" placeholder="Type your password" [(ngModel)]="password" class="form-control"
+                                    <input type="password" placeholder="Type your password" [(ngModel)]="password"
+                                           class="form-control"
                                            style="height: 30px;margin-top: 15px;" name="password">
                                     <p class="clear"></p>
                                     <div class="text-center">
